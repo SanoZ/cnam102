@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+	<nav1>
+		<accueil>
+			<label>Accueil</label>
+			<module>frontend</module>
+			<controller>index</controller>
+			<action>index</action>
+		</accueil>
+		<contact>
+			<label>Contact</label>
+			<module>frontend</module>
+			<controller>index</controller>
+			<action>contact</action>
+		</contact>
+	</nav1>
+	<nav2>
+		<compte>
+			<label>Mon compte</label>
+			<module>frontend</module>
+			<controller>compte</controller>
+			<action>index</action>
+		</compte>
+		<panier>
+			<label>Mon panier</label>
+			<module>frontend</module>
+			<controller>panier</controller>
+			<action>index</action>
+		</panier>
+		<connexion>
+			<label>Connexion</label>
+			<module>frontend</module>
+			<controller>Connexion</controller>
+			<action>index</action>
+		</connexion>
+	</nav2>
+	<sidebar>
+		<tous>
+			<label>Tous les tableaux</label>
+			<module>frontend</module>
+			<controller>article</controller>
+			<action>index</action>
+			<params>
+				<tableau>tout</tableau>
+			</params>
+		</tous>
+		<nouveautes>
+			<label>Nouveautés</label>
+			<module>frontend</module>
+			<controller>article</controller>
+			<action>index</action>
+			<params>
+				<tableau>nouveau</tableau>
+			</params>
+		</nouveautes>
+		<populaires>
+			<label>Les plus populaires</label>
+			<module>frontend</module>
+			<controller>article</controller>
+			<action>index</action>
+			<params>
+				<tableau>populaire</tableau>
+			</params>
+		</populaires>
+		<themes>
+			<label>Par thème</label>
+			<module>frontend</module>
+			<controller>article</controller>
+			<action>index</action>
+			<params>
+				<theme>tout</theme>
+			</params>
+		</themes>
+		<dimensions>
+			<label>Par dimension</label>
+			<module>frontend</module>
+			<controller>article</controller>
+			<action>index</action>
+			<params>
+				<dimension>tout</dimension>
+			</params>
+		</dimensions>
+	</sidebar>
+</configdata>

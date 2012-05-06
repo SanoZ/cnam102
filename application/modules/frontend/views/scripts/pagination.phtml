@@ -1,0 +1,30 @@
+<div class="pagination pagination-centered">
+	<ul>
+	<?php
+	if(isset($this->previous)) {
+		echo "<li><a href='".$this->url(array('page'=>$this->first))."'>&laquo;</a></li>";
+		echo "<li><a href='".$this->url(array('page'=>$this->previous))."'>&lsaquo;</a></li>";
+	}
+	else {
+		echo "<li class='disabled'><a>&laquo;</a></li>";
+		echo "<li class='disabled'><a>&lsaquo;</a></li>";
+	}
+	foreach($this->pagesInRange as $page) {
+		if ($this->current ==$page) {
+			echo "<li class='active'><a>".$page."</a></li>";
+		}
+		else {
+			echo "<li><a href='".$this->url(array('page'=>$page))."'>".$page."</a></li>";
+		}	
+	}
+	if(isset($this->next)) {
+		echo "<li><a href='".$this->url(array('page'=>$this->next))."'>&rsaquo;</a></li>";
+		echo "<li><a href='".$this->url(array('page'=>$this->last))."'>&raquo;</a></li>";
+	}
+	else {
+		echo "<li class='disabled'><a>&rsaquo;</a></li>";
+		echo "<li class='disabled'><a>&raquo;</a></li>";
+	}
+	?>
+	</ul>
+</div>
