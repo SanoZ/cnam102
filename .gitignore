@@ -1,0 +1,4 @@
+configs/application.ini
+tests/*
+library/Zend/*
+!empty
