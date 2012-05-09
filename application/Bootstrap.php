@@ -23,10 +23,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         // debugging
         if($this->_config->debug) {
-
             error_reporting(E_ALL | E_STRICT);
             ini_set('display_errors', 'on');
-        }
+        } 
     }
 
 	protected function _initView()
