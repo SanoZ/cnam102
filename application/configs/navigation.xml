@@ -18,7 +18,7 @@
 		<compte>
 			<label>Mon compte</label>
 			<module>frontend</module>
-			<controller>compte</controller>
+			<controller>account</controller>
 			<action>index</action>
 		</compte>
 		<panier>
