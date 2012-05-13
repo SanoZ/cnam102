@@ -1,0 +1,219 @@
+<!-- Login Div -->
+<div class="popup-login-section" id="popup-login-section-login" style="display:none;">
+  <h1>Log In</h1>
+  <div class="clear"></div>
+  <div class="fb-login-container section-greybox">
+      <div id="fb-root"></div>
+      <div class="fb-login-button" onsuccess="redirect();" onlogin="OnFacebookLogIn();" data-scope="publish_actions,email,publish_stream,user_about_me,user_birthday,user_location,offline_access">
+        Log in with Facebook
+      </div>
+      <span>By signing in you accept our <a href="/terms-7t" target="_blank">terms of use</a>.</span>
+  </div>
+  
+  <form action="/login/login" method="post" enctype="application/x-www-form-urlencoded" id="login2">
+    <div class="form-popup">
+      <dl>
+        <dt>
+          <label class="form-popup-label clear"id="label_email_login">Email</label>
+        </dt>
+        <dd>
+          <input tabindex=1 class="form-popup-input clear" autocomplete="off" name="loginemail" type="text" id="email_login_input"  />
+        </dd>
+      </dl>
+      <dl>
+        <dt>
+          <label class="form-popup-label clear"id="label_password_login">Password</label>
+          <a id="action-forgot-password" href="#">Forgot Password?</a> </dt>
+        <dd>
+          <input tabindex=2 class="form-popup-input clear" name="loginpassword" type="password" id="password_login_input" />
+        </dd>
+      </dl>
+    </div>
+    <div class="clear"></div>
+    <input name="login" type="submit" value="LOG IN" class="button-yellow button-yellow-form" id="login_user_login_colorbox"/>
+    <a href="#" class="button-close-popup action-login-cancel">Close</a>
+    <div class="clear"></div>
+    Don't have an account? <a id="action-sign-up" href="#">Sign up here</a>
+  </form>
+</div>
+<!--Forgot Password Div-->
+<div class="popup-login-section" id="popup-login-section-forgot" style="display:none;">
+  <h1>Log In</h1>
+  <div class="clear"></div>
+  <div class="fb-login-container section-greybox">
+      <div id="fb-root"></div>
+      <div class="fb-login-button" onlogin="OnFacebookLogIn();" data-scope="publish_actions,email,publish_stream,user_about_me,user_birthday,user_location,offline_access">
+        Log in with Facebook
+      </div>
+      <span>By signing in you accept our <a href="/terms-7t" target="_blank">terms of use</a>.</span>
+  </div>
+  <form action="/account/forgot-password" method="post" enctype="application/x-www-form-urlencoded" id="forgot-pass">
+    <p>Enter your email address below to recover your password:</p>
+    <div id="notify-added-pass_reset" class="register-error"></div>
+    <div class="form-popup">
+      <dl>
+        <dd>
+          <input class="form-popup-input" id="email_forgot_input" name="email_forgot" type="text" />
+        </dd>
+      </dl>
+    </div>
+    <div class="clear"></div>
+    <div id="forgot_notification_section"></div>
+    <div id="forgot_button_section">
+        <input class="button-yellow button-yellow-form" id="forgot_pass_button" name="login" type="submit" value="SUBMIT"/>
+        <a href="#" class="button-close-popup action-login-cancel">Close</a>
+    </div>
+    
+    <div class="clear"></div>
+  </form>
+</div>
+<!--Register Div-->
+<div class="popup-login-section" id="popup-login-section-register" style="display:none;">
+    <h1>Sign Up</h1>
+  <div class="clear"></div>
+  <p>Register now and discover the world of online shopping!</p>
+  <form action="/account/register" method="post" enctype="application/x-www-form-urlencoded" id="registration-pop">
+    <div class="form-popup">
+      <dl>
+        <dt>
+          <label id="email_register_login_label">Email</label>
+        </dt>
+        <dd>
+          <input class="form-popup-input validate[custom[email]]" name="email" autocomplete="off" type="text" id="register_email"  />
+        </dd>
+      </dl>
+      <dl>
+        <dt>
+          <label id="password_register_login_label">Password</label>
+        </dt>
+        <dd>
+          <input class="form-popup-input validate[required, length[6,100]]" name="password" type="password" id="register_password" />
+        </dd>
+      </dl>
+      <dl style="width:123px;">
+        <dt>
+          <label id="fname_register_login_label" >First name</label>
+        </dt>
+        <dd>
+          <input class="form-popup-input-small validate[required, length[2,100]] fname" name="fname" type="text" id="register_fname"/>
+        </dd>
+      </dl>
+      <dl style="width:123px;">
+        <dt>
+          <label id="lname_register_login_label">Last name</label>
+        </dt>
+        <dd>
+          <input class="form-popup-input-small validate[required, length[2,100]] lname" name="lname" type="text" id="register_lname"/>
+        </dd>
+      </dl>
+      <dl style="width:123px;">
+        <dt>
+          <label id="lname_register_login_label">Date of birth</label>
+        </dt>
+        <dd>
+          <input class="form-popup-input-small validate[custom[integer]]" style="width:26px;padding-left:2px;padding-right:2px;margin-right:5px;text-align:center;" name="dob_d" type="text" id="register_dd" value="" placeholder="DD" maxlength="2"/>
+          <input class="form-popup-input-small validate[custom[integer]]" style="width:26px;padding-left:2px;padding-right:2px;margin-right:5px;text-align:center;" name="dob_m" type="text" id="register_mm" value="" placeholder="MM" maxlength="2"/>
+          <input class="form-popup-input-small validate[custom[integer]]" style="width:36px;padding-left:2px;padding-right:2px;margin-right:5px;text-align:center;" name="dob_y" type="text" id="register_yyyy" value="" placeholder="YYYY" maxlength="4"/>
+        </dd>
+      </dl>
+      <dl style="width:123px;">
+        <dt>Gender</dt>
+        <dd>
+          <input class="form-radio-input" name="gender" type="radio" value="Male" />
+          <label class="form-radio-label">Male</label>
+          <input class="form-radio-input" name="gender" type="radio" value="Female" />
+          <label class="form-radio-label">Female </label>
+        </dd>
+      </dl>
+      <dl>
+        <dt>
+          <label id="password_register_login_label">Country</label>
+        </dt>
+        <dd>
+            <div class="form-ddl-container ddl-login">
+          <?php echo $this->formSelect('country', null, null, $this->countries); ?>
+            </div>
+        </dd>
+      </dl>
+    
+    <div class="clear"></div>
+    </div>
+    <input class="button-yellow button-yellow-form" name="register" type="submit" value="REGISTER" id="register_user_login_colorbox"/>
+    <a href="#" class="button-close-popup action-login-cancel">Close</a>
+  </form>            
+</div>
+<!--Register Div-->
+<div class="popup-login-section" id="popup-login-section-register-fb" style="height:180px;display:none;">
+    <h1>Sign Up With Facebook</h1>
+  <div class="clear"></div>
+  <div class="fb-login-container section-greybox">
+      <div id="fb-root"></div>
+      <div class="fb-login-button" onlogin="OnFacebookLogIn();" data-scope="publish_actions,email,publish_stream,user_about_me,user_birthday,user_location,offline_access">
+        Log in with Facebook
+      </div>
+      <span>By signing in you accept our <a href="/terms-7t" target="_blank">terms of use</a>.</span>
+  </div>
+  <div class="clear"></div>
+  Don't have Facebook? <a id="action-sign-up-fb" href="#">Sign up on Ollio here for free.</a>       
+</div>
+
+
+                
+<script type="text/javascript">
+$(document).ready(function(){
+
+	 
+    $("#action-forgot-password").live('click',function(){
+        $("#popup-login-section-login").hide();
+		$("#popup-login-section-forgot").show();
+                
+        return false;
+    });
+	
+    $("#action-sign-up").live('click',function(){
+        $("#popup-login-section-login").hide();
+        $("#popup-login-section-register").show();
+        return false;
+    });
+    
+    $("#action-sign-up-fb").live('click',function(){
+        $("#popup-login-section-register-fb").hide();
+		$("#popup-login-section-register").show();
+                $.colorbox.resize();
+        return false;
+    }); 
+    
+    $(".action-login-cancel").live('click',function(){
+        $("#registration-pop").validationEngine('hideAll');
+        parent.$(".iframe").colorbox.close();
+	return false;
+    });
+    
+    
+    
+    $("#forgot-pass").live('submit',function(){
+        var button = $("#forgot_button_section").html();
+        $("#forgot_button_section").html("<img src=\"/images/loading.gif\"/> <?php echo $this->Sr('default_login_index-resetting-password'); ?>");
+        
+        $.post(
+            $(this).attr('action'),
+            $(this).serialize(),
+            function(data){
+                $("#forgot_button_section").html(button);
+                $("#forgot_notification_section").html(data.text);
+                setTimeout("resetNotification();",5000); 
+            },
+            'json'
+        );
+        return false;
+    });
+});
+
+function OnFacebookLogIn() {
+    facebookLogin();
+}
+
+function resetNotification(){
+    $("#forgot_notification_section").html("");
+}
+</script>

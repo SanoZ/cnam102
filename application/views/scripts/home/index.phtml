@@ -1,0 +1,73 @@
+<link href="css/style-home.css?<?= __RELEASE_HASH ?>" media="screen" rel="stylesheet" type="text/css" />
+<!--[If IE]><link href="css/ie-only-home.css?<?= __RELEASE_HASH ?>" media="screen" rel="stylesheet" type="text/css" /><!--[end If]--> 
+
+<!--------------- old version back up --------------->
+
+<div id="horizon">
+    <div id="intro-wrapper" class="homecontainer">
+      <img src="images/logo-intro.png" width="243" height="125" alt="Ollio - The Internet's biggest shopping mall"  title="Ollio - The Internet's biggest shopping mall" class="logo clear" />
+      <h1>Discover new online retailers around the world</h1>
+        <img src="images/intro-world.png" width="262" height="333" alt="discovering online retailers around the world" title="discovering online retailers around the world" class="intro-image" />
+    <ul>
+    <li>Get <span class="blue">recommended online stores</span> based on what's popular & matches your taste</li>
+            <li>Keep up to date with <span class="blue">new products & offers</span> from your favorite stores</li>
+            <li><span class="blue">Connect with people</span> that share your style</li>
+        </ul>
+    <div class="intro-login">
+<!--            <a class="button-yellow" id="action-sign-up-welcomebar" href="/login/display-login">Log in with facebook</a>-->
+            
+             <div class="fb-login-button button-yellow" onlogin="OnFacebookLogIn();" data-scope="publish_actions,email,publish_stream,user_about_me,user_birthday,user_location,offline_access">
+                Log in with Facebook
+            </div>
+<!--            <span>By signing in you accept our <a href="/terms-7t" target="_blank">terms of use</a>.</span>-->
+            
+            
+            <div class="intro-vp">You're just 1 minute away from<br />discovering new online stores</div>
+        <div class="clear optional-login">Don't have Facebook? <a href="/login/display-login" id="action-log-in">Log in using your email.</a></div>
+        </div>
+    </div>
+
+</div>
+
+<div id="intro-footer">
+	<div class="intro-footer-container">
+    	<div id="footer-copyright">
+            Ollio &copy; 2012 - English(US)
+        </div>
+        <ul>
+            <li><a href="/terms-7t">Terms</a></li>
+            <li>-</li>
+            <li><a href="/privacy-9t">Privacy</a></li>
+        </ul>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function(){
+        $("#action-log-in").click(function(){
+            $.post(
+            $(this).attr('href'),
+            {
+                ajax: true
+            },
+            function(data){
+                $.colorbox({
+                    html:data,
+                    onComplete: function(){
+                        $.colorbox.resize();
+                        FB.XFBML.parse();  
+                    }
+                });
+                $('.scroll-pane').jScrollPane({
+                    autoReinitialise:true
+                });
+                $("#registration-pop").validationEngine();
+                $("#popup-login-section-login").show();
+            }
+        );	
+            return false;
+        });
+        return false;
+}); 
+</script>
+

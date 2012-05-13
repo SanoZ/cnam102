@@ -1,0 +1,132 @@
+<h1>User Accounts</h1>
+
+<div class="clear"></div>
+<p>Below are user accounts for the Website CMS.</p><br />
+
+  <div id="feedback-bar" class="feedback-bar" style="display:none"></div>
+
+
+<script type="text/javascript">
+function deleteTableItem() {
+    if(confirm('Do you really want to delet the selected users??')){
+        $.post('/admin/user/delete', $("#table_form").serialize() , function(data) {
+            //show feedback
+            $("#feedback-bar").html(data);
+            $("#feedback-bar").slideDown();      
+            //Delete the row
+            $('input:checkbox:checked').closest('tr').remove();      
+        });   
+    } 
+}
+</script>
+
+<?php 
+
+$events = $this->events;
+
+?>   
+
+<!-- Title Page -->
+<form id="table_form" name="form1" method="post" action="#">
+
+<!-- Buttons -->
+<div  id="top-button-index">
+    <table cellpadding="0" cellspacing="0" border="1" width="100%" align="left">
+        <tr>
+            <td width="280">
+            <!-- Search Bar -->
+                  <?php echo $this->Sr("admin_user_index_search");?> <input id="search" type="text" name="search" value="<?php echo $this->search_query; ?>" />
+                  </td>
+                  <td width="90"><input type="submit" value="Search!" class="green-button" />
+                  <!-- Search Bar -->
+                  <!-- Show all Button -->
+                </td>
+                <td width="110">
+		<?php if($this->show_all){ ?>
+                <a href="/admin/user" />
+                <div  class="yellow-button">Show All</div></a>
+                <?php } ?>
+                </td>
+            <td width="*">	
+           	<!-- Buttons -->
+            <div class="align-right" >
+                <?php if($this->super_admin){ ?>
+                    <a href="/admin/role" class="green-button button right-spacer">Roles</a> 
+                    <a href="/admin/user-fields" class="green-button button right-spacer">Fields</a> 
+                <?php } ?>
+                <a href="/admin/user/form" class="green-button button right-spacer">Add New</a> 
+                <a onclick="deleteTableItem()" class="red-button button right-spacer">Remove</a>   
+			</div>
+            </td>
+    </tr>
+    </table>
+</div>
+<!-- Buttons -->
+
+<div class="clear"></div>
+
+<!-- Listing Area Begin -->
+
+<div id="listing">
+
+<!-- no data -->
+<?php if($this->paginator->count() == 0) {?>
+<?php echo $this->Sr("admin_user_index_no-users"); ?>
+<!-- no data - End -->
+<?php } else { ?>
+<table width="100%" border="0" cellspacing="0" cellpadding="0">
+
+
+<!-- Titles Begin -->
+
+<tr id="titles">
+<td class="list-select"><input type="checkbox" name="master_check" id="master_check" /></td>
+<td class="list-id">ID </td>
+<td class="list-email">Email</td>
+
+<?php foreach($this->userFields as $field){ ?>
+    <td ><?php echo $field['user_field_name'];?></td>
+<?php } ?>
+
+<td class="list-edit">Edit</td>    
+</tr>
+
+<!-- Titles End -->
+
+    <?php foreach ($this->paginator as $user) {
+        $userFields = $this->userFields($user['user_id']);
+        ?> 
+
+        <tr>
+            <td><input type="checkbox" name="delete_box[]" value="<?php echo $user['user_id'];  ?>"  id="checkbox" /></td>
+            <td><?php echo $user['user_id'];?></td>
+            <td><a href="mailto:<?php echo $user['user_email']; ?>"><?php echo $user['user_email']; ?></a></td>
+            <?php 
+                
+                foreach($this->userFields as $field){ ?>
+                <td ><?php echo $userFields[$field['user_field_name']]['value'];?></td>
+            <?php } ?>
+            <td>
+                <div align="center" style="margin:0 10px"><a href="<?php echo "/admin/user/form/edituser/" . $user['user_id']; ?>" class="green-button">Edit</a></div>
+            </td>
+        </tr>
+
+        <?php
+
+    }
+
+
+}
+?>
+
+</table>
+
+</div>
+<input type="hidden" value="" id="user_id" name="user_id" />
+</form>
+
+<?php echo $this->paginator; ?>
+
+
+
+<!-- Listing Area End -->
