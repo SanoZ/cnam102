@@ -1,11 +1,13 @@
 ﻿<?php
 
-class Frontend_Form_Login extends Zend_Form
+class Form_Login extends Zend_Form
 {
 
     public function init()
     {
 		$this->setName('login');
+        $this->setMethod('post');
+
 		$this->setAttrib('class', 'well');
 		$this->setDecorators(array(
             'Description',
@@ -14,6 +16,7 @@ class Frontend_Form_Login extends Zend_Form
         ));
 		$this->getDecorator('Description')->setOption('class', 'badge badge-warning');
 		$this->setDescription("Vous avez déjà un compte ?");
+		
 		
         $mail = new Zend_Form_Element_Text('mail');
 		$mail	->setLabel('adresse mail')
@@ -33,10 +36,6 @@ class Frontend_Form_Login extends Zend_Form
 		$submit->setAttrib('id', 'submitbutton');
 	
 		$this->addElements(array($mail, $password, $submit));
-		
-		//$this->setElementDecorators(array(array('form', array('class'=>'well'))));
-		//$this->setDecorators(array('FormElements',array('HtmlTag', array('tag' => 'table')),'Form',));
-		
     }
 
 

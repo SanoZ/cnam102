@@ -18,7 +18,7 @@
 		<compte>
 			<label>Mon compte</label>
 			<module>default</module>
-			<controller>account</controller>
+			<controller>compte</controller>
 			<action>index</action>
 		</compte>
 		<panier>
@@ -30,7 +30,7 @@
 		<connexion>
 			<label>Connexion</label>
 			<module>default</module>
-			<controller>Connexion</controller>
+			<controller>auth</controller>
 			<action>index</action>
 		</connexion>
 	</nav2>

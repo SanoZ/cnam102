@@ -1,6 +1,7 @@
 <?php
 
-class IndexController extends Zend_Controller_Action
+require_once('ApplicationController.php');
+class IndexController extends ApplicationController
 {
 
     public function init()

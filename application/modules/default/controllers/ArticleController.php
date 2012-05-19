@@ -1,6 +1,7 @@
 ﻿<?php
 
-class Default_ArticleController extends Zend_Controller_Action
+require_once('ApplicationController.php');	
+class ArticleController extends ApplicationController
 {
 
     public function init()

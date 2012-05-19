@@ -53,8 +53,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Layout::startMvc(
             array(
                 'layoutPath' => APPLICATION_PATH . "/layouts/scripts",
-                'layout' => 'layout',
-                // 'pluginClass' => 'ZFBlog_Layout_Controller_Plugin_Layout'
+                'layout' => 'layout'
             )
         );
         $view->addHelperPath(APPLICATION_PATH . '/modules/default/views/helpers', 'Zend_View_Helper');

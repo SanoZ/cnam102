@@ -1,15 +1,7 @@
 <?php
-/**
- * Ziller_Misc_Time class
- *
- * @creator:   konrad.siery <k.siery@gmail.com>
- * @copyright: 2012 Ziller
- * @license:   http://www.ziller.com.au
- */
-
 require_once('Zend/Date.php');
 
-class Ziller_Misc_Time
+class Common_Misc_Time
 {
     static public function niceTime($time)
     {
