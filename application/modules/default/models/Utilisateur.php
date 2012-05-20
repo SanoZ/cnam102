@@ -59,7 +59,7 @@ class Model_Utilisateur
 			throw new Model_DbTable_Utilisateur_Exception("Désolé, le password et sa confirmation ne sont pas identique. Veuillez re-essayer.");
 		}
 	}
-     	 
+   
 	protected function _save($data){
 		$user_model = Model_DbTable_Utilisateur::getUserById($data["utilisateur_id"]);
 		if($user_model){

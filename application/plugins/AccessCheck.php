@@ -19,11 +19,11 @@ class Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract {
         if($resource == 'default'){
             return;
         }
-        
+var_dump($identity);die;        
         if($identity){
-            $role = $identity->user_role;
+            $role = $identity->role_id;
             //has privileges
-            if($role != 5){
+            if($role != 2){
                 if (!$this->_acl->isAllowed($role, $resource)) {
                     //if i am not allowed to acces the admin area take the user to the login page of default area
                     $request->setModuleName('default');
