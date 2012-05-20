@@ -70,18 +70,19 @@ class AuthController extends ApplicationController
             if($form->isValid($_POST)){
                 $data = $form->getValues();
                 if($data['password'] != $data['confirmPassword']){
-                    $this->view->errorMessage = "Password and confirm password don't match.";
+                    $this->view->errorMessage = "Password et confirmation sont différents.";
                     return;
                 }
-                if($user->isEmailRegistered($data['email'])){
-                    $this->view->errorMessage = "Name already taken. Please choose      another one.";                                                                                                  
+                if(Model_DbTable_Utilisateur::isEmailRegistered($data['email'])){
+                    $this->view->errorMessage = "Cet email existe déjà dans notre base.";                                                                                                  
 					return;                                                                                                                                       				
 				}
                 unset($data['confirmPassword']);
                 $user->insert($data);
                 $this->_redirect('/index');
             }
-        }$this->view->errorMessage  = "gggodd";
+        }
+		$this->view->errorMessage = "Erreur. Veuillez essayer à nouveau.";
     }
 	public function logoutAction()
 	{

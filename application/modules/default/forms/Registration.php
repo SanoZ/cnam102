@@ -53,7 +53,7 @@ class Form_Registration extends Zend_Form
 		        $password->setLabel('Password: *')
 		                ->setRequired(true);
 
-		        $confirmPassword = new Zend_Form_Element_Text('confirmPassword'); 
+		        $confirmPassword = new Zend_Form_Element_Password('confirmPassword'); 
 		        $confirmPassword->setLabel('Confirm Password: *')
 		                ->setRequired(true);
 
