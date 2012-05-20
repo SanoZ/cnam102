@@ -19,6 +19,11 @@ class Model_DbTable_Utilisateur extends Zend_Db_Table_Abstract
     } 
 
 
-
+/*
+if(!Zend_Auth::getInstance()->hasIdentity())
+        {
+            $this->_redirect('dev/login/index');
+        }
+*/
 }
 

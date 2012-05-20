@@ -21,7 +21,7 @@ class AuthController extends ApplicationController
 					// We're authenticated! Redirect to the home page
 					$this->_helper->redirector('index', 'index');
 				}else{
-					$this->view->message = "error";
+					$this->view->message = "Erreur, Vérifiez votre email et/ou mot de passe;";
 				}
 			}
 		}
