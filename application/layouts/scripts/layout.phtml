@@ -38,7 +38,11 @@
 					<span class="badge badge-defaut">&nbsp;&nbsp;</span>
 					<h3><a><em>Sur la toile</em></a></h3>
 				</div>
-				<?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->render($this->menu2); ?>
+				<?php if($this->loggedUser){?>
+					<?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->render($this->loggedin); ?>
+				<?php }else{ ?>
+						<?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->render($this->loggedout); ?>
+				<?php }?>
 				<form class="navbar-search pull-right">
 					<i class="icon-search icon-white"></i>
 					<input type="text" class="search-query" placeholder="rechercher">

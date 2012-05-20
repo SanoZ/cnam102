@@ -39,37 +39,7 @@ class CompteController extends ApplicationController
         } 
         $this->_helper->json->sendJson($result);
     }
-	public function forgotPasswordAction(){
-
-        
-        $this->_helper->layout->disableLayout();
-        $this->_helper->viewRenderer->setNoRender(true);
-        $user_model = new Model_User();
-        $global_model = new Model_Globals();
-
-        $result = array();
-        $email = $this->_request->getParam('email_forgot',"");
-        
-        $result['text'] = "<p>The email entered is invalid</p>";
-        if($email != ''){
-            $user = $user_model->getUserByEmail($email);
-            if($user != null){
-                //generating the new password
-                $user_model->loadUser($user['user_id']);
-                $pass = $global_model->genRandomString(10);
-                $user_model->user_password =  md5($pass);
-
-                //$this->sendEmailForgotPasword($email, $pass);
-                $model_email = new Model_Email();
-                $model_email->sendEmailForgotPasword($email,$pass);
-
-                $result['text'] = "<p class='register-success'>Your password has been sent out.<br/>Please check your email.</p>";
-            } else {
-                $result['text'] = "<p>There in no user with this email account.</p>";
-            }
-        } 
-        $this->_helper->json->sendJson($result);
-    }
+ 
 
 	public function registerAction() {
 

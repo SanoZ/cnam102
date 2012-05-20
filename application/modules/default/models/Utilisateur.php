@@ -1,7 +1,23 @@
 <?php
 
-class Model_User 
+class Model_Utilisateur  
 {
+	protected $_tableClass         = 'Model_DbTable_Utilisateur';
+    protected $_data               = array(
+        'utilisateur_id'			=> '',
+        'nom'                         => '',
+        'prenom'                          => '', 
+        'adresse1'                          => '', 
+        'adresse2'                          => '', 
+        'cp'                          => '', 
+        'email'                          => '',
+        'ville'                          => '', 
+        'active'                          => '', 
+        'date_creation'                          => '', 
+       // 'password'                          => '',
+        //'salt'                          => '',
+        'role_id'                          => '' //1 user 2 admin
+    );
     /**
      * @var table Model_DbTable_User
      */
@@ -12,37 +28,31 @@ class Model_User
      */
     private $user;
     
-    const _ROLE_SUPER_ADMIN = 5;
-    const _ROLE_NORMAL_USER = 2;
-    
- 
-    
-    public function Model_User($user_id=null){
-        $this->table = new Model_DbTable_User();
-        $this->user = null;
-        if($user_id!=null){
-            $this->loadUser($user_id);
-        }
-    }
+    const _ROLE_SUPER_ADMIN = 2;
+    const _ROLE_NORMAL_USER = 1;
 
-public function getCurrentUser(){
-	
-}
-    
-    
-    public function createUser($email, $password, $role=2,$newFBUser = false){
-        $data = array();
-        $data['user_email'] = $email;
-        $data['user_password'] = md5($password);
-        $data['user_role'] = $role;
-        $data['newRegistered'] = 1;
-        $data['newFBRegistered'] = $newFBUser;
-        return $this->table->insert($data);
-    }
-    
+ 
+    public function insert($data){
+		$data['role_id'] = self::_ROLE_NORMAL_USER;
+		$data['date_creation'] = date("Y-m-d H:i:s"); 
+		$data['password'] = sha1($data['password']);
+		// $data['salt'] = $data['password'];
+		$user = new Model_DbTable_Utilisateur();
+	    $user->insert($data);
+	}
+      //   
+      // public function createUser($data, $role=self::_ROLE_NORMAL_USER ){
+      //     $data = array();
+      //     $data['user_email'] = $email;
+      //     $data['user_password'] = sha1($password);
+      //     $data['user_role'] = $role;
+      //     return $this->table->insert($data);
+      // }
+      // 
      
     public function isEmailRegistered($email ){
-        $user = $this->table->fetchRow("user_email like '{$email}' and deleted=0 and user_id<>{$user_id}");
+		$this->table = new Model_DbTable_Utilisateur();
+        $user = $this->table->fetchRow(" email like '{$email}'   ");
         if ($user){
             return true;
         }
@@ -50,6 +60,7 @@ public function getCurrentUser(){
     }
     
     public function userExistsId($user_id){
+		$this->table = new Model_DbTable_Utilisateur();
         $user = $this->table->fetchRow("user_id = '{$user_id}'");
         if ($user){
             return true;

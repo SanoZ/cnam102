@@ -88,8 +88,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 	 	$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav1');
 	 	$view->menu1 = new Zend_Navigation($pages);
 	 		
-	 	$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav2');
-		$view->menu2 = new Zend_Navigation($pages);
+	 	$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'loggedin');
+		$view->loggedin = new Zend_Navigation($pages);
+		
+ 		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'loggedout');
+		$view->loggedout = new Zend_Navigation($pages);
 			
 		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'sidebar');
 		$sidebar = new Zend_Navigation($pages);

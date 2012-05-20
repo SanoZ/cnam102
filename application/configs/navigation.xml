@@ -14,7 +14,7 @@
 			<action>contact</action>
 		</contact>
 	</nav1>
-	<nav2>
+	<loggedin>
 		<compte>
 			<label>Mon compte</label>
 			<module>default</module>
@@ -27,13 +27,27 @@
 			<controller>panier</controller>
 			<action>index</action>
 		</panier>
-		<connexion>
-			<label>Connexion</label>
+		<logout>
+			<label>Log out</label>
+			<module>default</module>
+			<controller>auth</controller>
+			<action>logout</action>
+		</logout>
+	</loggedin>
+	<loggedout>
+		<compte>
+			<label>Log in</label>
 			<module>default</module>
 			<controller>auth</controller>
 			<action>index</action>
-		</connexion>
-	</nav2>
+		</compte>
+		<panier>
+			<label>Sign up</label>
+			<module>default</module>
+			<controller>auth</controller>
+			<action>signup</action>
+		</panier>
+	</loggedout>
 	<sidebar>
 		<tous>
 			<label>Tous les tableaux</label>

@@ -9,8 +9,11 @@ class AuthController extends ApplicationController
 
 	public function indexAction()
 	{
+		if($this->_loggedUser){
+			$this->_helper->redirector('index', 'index');
+		}
 		$form = new Form_Login();
-$this->view->message = "";
+		$this->view->message = "";
 		$request = $this->getRequest();
 		if ($request->isPost()) { 
 			if ($form->isValid($request->getPost())) {
@@ -22,7 +25,7 @@ $this->view->message = "";
 				}
 			}
 		}
-			$this->view->form = $form;
+		$this->view->form = $form;
 	}
 	
 	protected function _process($values)
@@ -30,7 +33,7 @@ $this->view->message = "";
      // Get our authentication adapter and check credentials
      $adapter = $this->_getAuthAdapter();
      $adapter->setIdentity($values['mail']); 
-     $adapter->setCredential($values['password']);
+     $adapter->setCredential(sha1($values['password']));
 
      $auth = Zend_Auth::getInstance();
      $result = $auth->authenticate($adapter);
@@ -49,12 +52,37 @@ $this->view->message = "";
 
 		$authAdapter->setTableName('utilisateurs')
 		    ->setIdentityColumn('email')
-		    ->setCredentialColumn('password')
-		    ->setCredentialTreatment('SHA1(CONCAT(?,salt))');
+		    ->setCredentialColumn('password');
+		    // ->setCredentialTreatment('SHA1(CONCAT(?,salt))');
  
 		return $authAdapter;
 	}
 	
+	public function signupAction()
+    {
+		if($this->_loggedUser){
+			$this->_helper->redirector('index', 'index');
+		}
+        $user = new Model_Utilisateur();
+        $form = new Form_Registration();
+        $this->view->form = $form;
+        if($this->getRequest()->isPost()){
+            if($form->isValid($_POST)){
+                $data = $form->getValues();
+                if($data['password'] != $data['confirmPassword']){
+                    $this->view->errorMessage = "Password and confirm password don't match.";
+                    return;
+                }
+                if($user->isEmailRegistered($data['email'])){
+                    $this->view->errorMessage = "Name already taken. Please choose      another one.";                                                                                                  
+					return;                                                                                                                                       				
+				}
+                unset($data['confirmPassword']);
+                $user->insert($data);
+                $this->_redirect('/index');
+            }
+        }$this->view->errorMessage  = "gggodd";
+    }
 	public function logoutAction()
 	{
 		Zend_Auth::getInstance()->clearIdentity();
