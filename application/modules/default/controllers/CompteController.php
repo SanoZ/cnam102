@@ -10,6 +10,10 @@ class CompteController extends ApplicationController
 		if($this->_loggedUser){
 			$this->_helper->redirector('signup', 'auth');
 		}
+		//si requete ajax on désactive les layouts
+        if($this->_request->isXmlHttpRequest()){
+            $this->_helper->layout->disableLayout();    //disable layout for ajax
+        }
     }
 
 	public function indexAction(){
@@ -69,7 +73,77 @@ class CompteController extends ApplicationController
     }
  
 
- 
+ 	public function commandeAction()
+	{
+		$params=Zend_Controller_Front::getInstance()->getRequest()->getParams();
+	
+		$commandes = new Model_Commande();
+		$query = $commandes->getOrdersByCustomerId('1'); //à remplacer par le session_id du client
+	
+		$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_DbSelect($query));
+		$paginator->setItemCountPerPage(10)
+				  ->setCurrentPageNumber(isset($params['page']) ? $params['page'] : 1);
+		$this->view->paginator = $paginator;
+	}
+	
+	public function ligneAction()
+	{	
+		$commande=Zend_Json::decode($this->_request->getParam('commande'));
+		$id=$commande['commande_id'];
+		$lignes = new Model_Ligne();
+		$select = $lignes->getOrderLinesByOrderId($id);
+		$results = $select->query()->fetchAll();
+		$this->view->results=$results;
+		$this->view->commande=$commande;
+
+	}
+	
+	public function pdfAction()
+	{
+		$id=$this->_request->getParam('id');
+		$commandes = new Model_Commande();
+		$lstCommandes = $commandes->getOrderById($id,true)->query()->fetchAll();
+		
+		// constructeur, création d'un document XML
+		$docXML = new DomDocument('1.0', 'utf-8');
+		$panierCommandes = $docXML->createElement('PanierCommandes');
+		$panierCommandes = $docXML->appendChild($panierCommandes);
+		
+		foreach ($lstCommandes as $elmCde) {
+			$commande = $docXML->createElement('Commande');
+			$commande = $panierCommandes->appendChild($commande);
+			foreach ($elmCde as $k=>$v) {
+				$commande->setAttribute($k,$v);
+			}
+			$panierLignes = $docXML->createElement('PanierLignes');
+			$panierLignes = $commande->appendChild($panierLignes);
+			$lignes = new Model_Ligne();
+			$lstLignes = $lignes->getOrderLinesByOrderId($elmCde['id'])->query()->fetchAll();
+			foreach ($lstLignes as $elmLig) {
+				$ligne = $docXML->createElement('Ligne');
+				$ligne = $panierLignes->appendChild($ligne);
+				foreach ($elmLig as $k=>$v) {
+					$ligne->setAttribute($k,$v);
+				}
+			}
+		}
+		//$docXML->validate();
+		
+		$xmlFolder = realpath(APPLICATION_PATH . '/../public/xml/');
+		$xmlFolder = str_replace("\\","/",$xmlFolder);
+		$filename = "commande_".$elmCde['id'];
+		$docXML->save($xmlFolder."/output/".$filename.".xml");
+		
+		$fopPath = "\"C:/Documents and Settings/Utilisateur/Bureau/exemple xsl/fop-1.0/fop\"";
+		$cmd = "-xml ".$xmlFolder."/output/".$filename.".xml -xsl ".$xmlFolder."/input/Commande.xsl -pdf ".$xmlFolder."/output/".$filename.".pdf";
+		$cmd = $fopPath." ".$cmd." 2>&1";
+		exec($cmd,$ret);
+		print_r($ret);
+		//die();
+		$this->view->folder=$xmlFolder;
+		$this->view->filename=$filename.".pdf";
+	}
+
 
  }
 

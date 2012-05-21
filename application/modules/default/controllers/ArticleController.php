@@ -57,7 +57,7 @@ class ArticleController extends ApplicationController
 			
 		}
 	}
-	
+// ?????????????????
 	public function editAction()
 	{
 		$form = new Application_Form_Album();

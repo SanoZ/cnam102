@@ -1,0 +1,44 @@
+﻿<?php
+    $this->headTitle('Titre');
+	$this->headScript()->appendFile('/js/tablesorter.js','text/javascript');
+	$script="jQuery(function($){
+		$('table#commandes').tablesorter({ headers: {0: {sorter:false}}, sortList: [[2,1]] });
+	})";
+	$this->headScript()->appendScript($script,'text/javascript');
+?>
+
+
+<div>
+	<h3>Liste des commandes passées</h3>
+	<?php 
+	echo "<table class='table table-condensed table-bordered' id='commandes'>";
+	echo "<thead><tr><th class='cell-center'>Détails</th><th class='cell-center'>Numéro de Commande</th><th class='cell-center'>Date</th><th class='cell-center'>Montant</th></tr></thead>";
+	echo "<tbody>";
+	foreach ($this->paginator as $commande) 
+		{
+		$link=$this->ajaxLink("<i class='icon-eye-open icon-white'></i> Détails", "/compte/ligne", array('update' => '#details', 'class' => 'btn btn-success btn-mini'), array('commande' => Zend_Json::encode($commande)));
+		echo "
+			<tr>
+				<td>
+					<div class='btn-group'>".
+						$link."
+						<a class='btn btn-success dropdown-toggle btn-mini' href='#' data-toggle='dropdown'><span class='caret'></span></a>
+						<ul class='dropdown-menu'>
+							<li><a href='/compte/pdf/id/".$commande['commande_id']."'><i class='icon-print'></i> Imprimer</a></li>
+						</ul>
+					</div>
+				</td>
+				<td>".$commande['commande_id']."</td>
+				<td>".$commande['date']."</td>
+				<td class='cell-right'>".$this->currency('1')."</td>
+			</tr>
+			";
+		}
+	echo "</tbody>";
+	echo "</table>";
+	echo $this->paginationControl($this->paginator,'sliding','pagination.phtml');
+	?>
+	<div id='details'></div>
+</div>
+
+

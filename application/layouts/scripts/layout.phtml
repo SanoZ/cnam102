@@ -6,7 +6,7 @@
     <?php echo $this->headTitle(); ?>
     
     <?php echo $this->headLink(); ?>
-    <?php echo $this->headLink()->appendStylesheet('/css/style.css') ?>
+    <?php //echo $this->headLink()->appendStylesheet('/css/style.css') ?>
 	
 	<link rel="stylesheet/less" href="/less/bootstrap.less">
 	<script src="/js/less.js"></script>
@@ -38,7 +38,14 @@
 					<span class="badge badge-defaut">&nbsp;&nbsp;</span>
 					<h3><a><em>Sur la toile</em></a></h3>
 				</div>
-				<?php if($this->loggedUser){?>
+				
+				<?php
+							$this->menu2->findById('nav-panier')->set('qteArticle',$this->qteArticle);
+							if($this->loggedUser) {
+								$this->menu2->findById('nav-compte')->set('label',$this->loggedInAs());
+								$this->menu2->findById('nav-compte')->set('logged','');
+							}
+				 if($this->loggedUser){?>
 					<?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->render($this->loggedin); ?>
 				<?php }else{ ?>
 						<?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->render($this->loggedout); ?>
@@ -69,10 +76,30 @@
 		<hr>
 		<div>Project &copy; 2012</div>
     </div>
-	
-	
-        
-            
-	
+
 </body>
+<?php 
+$this->jQuery()->setLocalPath('/js/jquery.js');
+$this->jQuery()->enable();
+echo $this->jQuery();
+$this->headScript()->appendFile('/js/bootstrap-dropdown.js','text/javascript');
+echo $this->headScript();
+?>
+	<!--A supprimer en production-->
+<script type="text/javascript">
+function destroyLessCache(pathToCss) { // e.g. '/css/' or '/stylesheets/'
+	if (!window.localStorage ) {
+		return;
+	}
+	var host = window.location.host;
+	var protocol = window.location.protocol;
+	var keyPrefix = protocol + '//' + host + pathToCss;
+	for (var key in window.localStorage) {
+		if (key.indexOf(keyPrefix) === 0) {
+			delete window.localStorage[key];
+		}
+	}
+}
+destroyLessCache('/less/');
+</script>
 </html>

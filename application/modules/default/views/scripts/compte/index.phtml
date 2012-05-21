@@ -5,9 +5,11 @@
 
 <div class="row">
 	<div class="span4">
-		<?php echo $this->form->setAction($this->url()); ?>
+		<?php echo $loginForm = $this->loginForm; ?>
 	</div>	
-	<div class="error">
-		<?php echo $this->errorMessage;?>
+	<div class="span4 well">
+		<p class="badge badge-warning">Vous souhaitez cr&eacute;er un compte</p>
+		<p>Cr&eacute;er un compte vous permettra de passer et suivre vos commandes</p>
+		<a class="btn btn-primary" href="<?php echo $this->linkTo('inscription','compte') ?>">Cr&eacute;er un compte maintenant</a>
 	</div>
 </form>	

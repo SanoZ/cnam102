@@ -98,6 +98,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$sidebar = new Zend_Navigation($pages);
 		$view->sidebar = $sidebar;
 			
+		//currency
+		$currency = new Zend_Currency('fr_FR');
+		Zend_Registry::set('Zend_Currency', $currency);
+
+		//qteArticle
+		$session = Zend_Registry::get('session');
+        $panier =  $session->panier;
+        $view->qteArticle = sizeof($panier->getLignes());
 			
 			//store sidebar in the bootstrap registry
 		return $view->sidebar;

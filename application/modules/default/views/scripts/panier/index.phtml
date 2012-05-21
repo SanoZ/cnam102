@@ -1,0 +1,31 @@
+﻿<div>
+	<?php
+	$panier = $this->panier;
+	if (isset($panier) && sizeof($panier->getLignes()) > 0) {
+		echo "<table class='table table-condensed table-bordered'>";
+		echo "<thead><tr><th class='cell-center'>&nbsp;</th><th class='cell-center'>Article</th><th class='cell-center'>Qté</th><th class='cell-center'>Prix</th></tr></thead>";
+		echo "
+			<tfoot><tr>
+				<td colspan='3' class='cell-right'><strong>Total</strong></td>
+				<td class='cell-right'>".$this->currency($panier->getTotal())."</td>
+			</tr></tfoot>";
+		echo "<tbody>";
+		foreach ($panier->getLignes() as $ligne) {
+            $article = $ligne->getArticle();
+			echo "
+				<tr>
+					<td><a class='btn btn-mini btn-success' href='".$this->linkTo('supprimer','panier','default',array('id'=>$article['id']))."'><i class='icon-trash icon-white'></i> Supprimer</a></td>
+					<td>".$article['nom']."</td>
+					<td class='cell-center'>".$ligne->getQteArticle()."</td>
+					<td class='cell-right'>".$this->currency($article['prix'])."</td>
+				</tr>";
+		}
+		echo "</tbody></table>";
+	
+	}
+	else {
+		echo "<p>panier vide<p>";
+	}
+	
+	?>
+</div>

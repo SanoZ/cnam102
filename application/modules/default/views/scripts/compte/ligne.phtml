@@ -1,0 +1,19 @@
+﻿<?php
+echo "<table class='table table-condensed' id='lignes'>";
+	echo "<thead>
+		<tr><th colspan='4'>Commande N° ".$this->commande['commande_id']." du ".$this->commande['date']."</th></tr>
+		<tr><th class='cell-center'>Référence</th><th class='cell-center'>Libellé</th><th class='cell-center'>Qté</th><th class='cell-center'>Prix Unitaire</th></tr></thead>";
+	echo "<tbody>"; 
+foreach ($this->results as $ligne) { 
+	echo "
+		<tr>
+			<td>".$ligne['ligne_id']."</td>
+			<td></td>
+			<td></td>
+			<td class='cell-right'>".$this->currency('1')."</td>
+		</tr>
+		";
+}
+echo "</tbody>";
+echo "</table>";
+?>

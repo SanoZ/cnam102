@@ -1,0 +1,1 @@
+<?php$file=$this->folder."/output/".$this->filename;header("Content-type: application/pdf");header("Content-Disposition: attachment; filename=\"".$this->filename."\"");readfile($file);exit;?>
