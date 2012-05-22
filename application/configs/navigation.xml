@@ -14,22 +14,6 @@
 			<action>contact</action>
 		</contact>
 	</nav1>
-	<loggedin>	
-		<contact>
-			<label>Contact</label>
-			<module>default</module>
-			<controller>index</controller>
-			<action>contact</action>
-		</contact>
-	</loggedin>
-	<loggedout>	
-		<contact>
-			<label>Contact</label>
-			<module>default</module>
-			<controller>index</controller>
-			<action>contact</action>
-		</contact>
-	</loggedout>
 	<nav2>
 		<panier>
 			<id>nav-panier</id>
