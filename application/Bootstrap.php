@@ -57,10 +57,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )
         );
         $view->addHelperPath(APPLICATION_PATH . '/modules/default/views/helpers', 'Zend_View_Helper');
+        $view->addHelperPath(APPLICATION_PATH . '/../library/ZendX/JQuery/View/Helper', 'ZendX_JQuery_View_Helper');
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
                         'ViewRenderer'
         );
         $viewRenderer->setView($view);
+		
 
     }
  
@@ -73,7 +75,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
  	   	}
 	}
 
-	
+	protected function _initSession() {
+		// On initialise la session
+		$session = new Zend_Session_Namespace ( 'ecommerce', true );
+		Zend_Registry::set('session',$session);
+		if(!isset($session->panier)){
+			$session->panier =  new App_Panier_Panier();
+		}
+		return $session;
+	}
+
 	
 	protected function _initNavigation(){
 			//execute after db
@@ -101,12 +112,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		//currency
 		$currency = new Zend_Currency('fr_FR');
 		Zend_Registry::set('Zend_Currency', $currency);
-
-		//qteArticle
+		// 
+		// 	//qteArticle
+		Zend_Session::start();
 		$session = Zend_Registry::get('session');
-        $panier =  $session->panier;
+		$panier =  $session->panier;
         $view->qteArticle = sizeof($panier->getLignes());
-			
+				
 			//store sidebar in the bootstrap registry
 		return $view->sidebar;
 	}

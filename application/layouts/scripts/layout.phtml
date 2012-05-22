@@ -40,16 +40,12 @@
 				</div>
 				
 				<?php
-							$this->menu2->findById('nav-panier')->set('qteArticle',$this->qteArticle);
-							if($this->loggedUser) {
-								$this->menu2->findById('nav-compte')->set('label',$this->loggedInAs());
-								$this->menu2->findById('nav-compte')->set('logged','');
-							}
-				 if($this->loggedUser){?>
-					<?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->render($this->loggedin); ?>
-				<?php }else{ ?>
-						<?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->render($this->loggedout); ?>
-				<?php }?>
+				$this->menu2->findById('nav-panier')->set('qteArticle',$this->qteArticle);
+				if($this->loggedUser) {
+						$this->menu2->findById('nav-compte')->set('label', $this->loggedInAs());
+						$this->menu2->findById('nav-compte')->set('logged','');
+				}
+				echo $this->navigation()->menu()->setPartial(array('menu2.phtml','default'))->render($this->menu2); ?>
 				<form class="navbar-search pull-right">
 					<i class="icon-search icon-white"></i>
 					<input type="text" class="search-query" placeholder="rechercher">

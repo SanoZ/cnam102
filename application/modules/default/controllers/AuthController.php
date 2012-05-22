@@ -1,5 +1,4 @@
 <?php
-
 require_once('ApplicationController.php');
 
 class AuthController extends ApplicationController

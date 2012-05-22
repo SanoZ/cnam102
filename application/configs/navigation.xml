@@ -14,40 +14,57 @@
 			<action>contact</action>
 		</contact>
 	</nav1>
-	<loggedin>
-		<compte>
-			<label>Mon compte</label>
+	<loggedin>	
+		<contact>
+			<label>Contact</label>
 			<module>default</module>
-			<controller>compte</controller>
-			<action>index</action>
-		</compte>
+			<controller>index</controller>
+			<action>contact</action>
+		</contact>
+	</loggedin>
+	<loggedout>	
+		<contact>
+			<label>Contact</label>
+			<module>default</module>
+			<controller>index</controller>
+			<action>contact</action>
+		</contact>
+	</loggedout>
+	<nav2>
 		<panier>
+			<id>nav-panier</id>
+			<icon>icon-shopping-cart icon-white</icon>
 			<label>Mon panier</label>
 			<module>default</module>
 			<controller>panier</controller>
 			<action>index</action>
-		</panier>
-		<logout>
-			<label>Log out</label>
-			<module>default</module>
-			<controller>auth</controller>
-			<action>logout</action>
-		</logout>
-	</loggedin>
-	<loggedout>
+		</panier>	
 		<compte>
-			<label>Log in</label>
+			<id>nav-compte</id>
+			<icon>icon-user icon-white</icon>
+			<label>Mon compte</label>
 			<module>default</module>
 			<controller>auth</controller>
 			<action>index</action>
+			<pages>
+				<compte>
+					<icon>icon-wrench</icon>
+					<separator></separator>
+					<label>Mon compte</label>
+					<module>default</module>
+					<controller>auth</controller>
+					<action>index</action>
+				</compte>
+				<deconnexion>
+					<icon>icon-off</icon>
+					<label>Déconnexion</label>
+					<module>default</module>
+					<controller>auth</controller>
+					<action>logout</action>
+				</deconnexion>
+			</pages>
 		</compte>
-		<panier>
-			<label>Sign up</label>
-			<module>default</module>
-			<controller>auth</controller>
-			<action>signup</action>
-		</panier>
-	</loggedout>
+	</nav2>
 	<sidebar>
 		<tous>
 			<label>Tous les tableaux</label>
