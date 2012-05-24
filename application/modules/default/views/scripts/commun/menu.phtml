@@ -1,0 +1,52 @@
+﻿<ul class='nav pull-right'>
+<?php
+foreach ($this->container as $page) {
+	$liClass = "";
+	if($page->isActive()) {
+		$liClass =" class='active'";
+	}
+	if(isset($page->uri)){
+		$label = $page->uri;
+	}else{
+		$label = $page->label;
+	}
+	if(isset($page->icon)) {
+		$label= "<i class='".$page->icon."'></i> ".$label; 
+	}
+	if($page->id == 'nav-panier'){
+		$label.="&nbsp;&nbsp;<span class='label label-warning'>".$page->qteArticle."</span>";
+		$link = "<a class='btn btn-mini btn-success' href='".$this->linkTo($page->action,$page->controller,$page->module,$page->params)."'>".$label."</a>";
+		$link="<div>".$link."</div>";
+	}
+	elseif($page->id == 'nav-compte'){
+		if(isset($page->logged)){
+			$link = "<a class='btn btn-primary btn-mini dropdown-toggle' href='#' data-toggle='dropdown'>".$label."<span class='caret'></span></a>";
+			$link.="<ul class='dropdown-menu'>";
+			foreach ($page as $subpage) {
+				$label = $subpage->label;
+				if(isset($subpage->icon)) {
+					$label= "<i class='".$subpage->icon."'></i> ".$label; 
+				}
+				$link.="<li><a href='".$this->linkTo($subpage->action,$subpage->controller,$subpage->module,$subpage->params)."'>".$label."</a></li>";
+				if(isset($subpage->separator)){
+					$link.="<li class='divider'></li>";
+				}
+			}
+			$link.="</ul>";
+			$link="<div class='btn-group'>".$link."</div>";
+		}
+		else {
+			$link = "<a class='btn btn-mini btn-primary' href='".$this->linkTo($page->action,$page->controller,$page->module,$page->params)."'>".$label."</a>";
+			$link="<div>".$link."</div>";
+		}
+	}
+	else {
+		$link = "<a href='".$this->linkTo($page->action,$page->controller,$page->module,$page->params)."'>".$label."</a>";
+	}
+	echo "<li".$liClass.">".$link."</li>";
+}
+?>
+</ul>
+
+
+

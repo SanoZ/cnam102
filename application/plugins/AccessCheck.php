@@ -19,7 +19,7 @@ class Plugin_AccessCheck extends Zend_Controller_Plugin_Abstract {
         if($resource == 'default'){
             return;
         }
-var_dump($identity);die;        
+       
         if($identity){
             $role = $identity->role_id;
             //has privileges

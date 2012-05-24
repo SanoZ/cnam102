@@ -13,10 +13,19 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 									
 		// debugging
 		if($this->_config->debug) {
-			echo "debug";
+			// echo "debug";
 			error_reporting(E_ALL | E_STRICT);
 			ini_set('display_errors', 'on');
 		} 
+	}
+	
+	protected function _initSession() {
+		// On initialise la session
+		$session = new Zend_Session_Namespace ( 'ecommerce', true );
+		Zend_Registry::set('session',$session);
+		if(!isset($session->panier)){
+			$session->panier =  new App_Panier_Panier();
+		}
 	}
 	
 	protected function _initAutoload() {
@@ -25,7 +34,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'namespace' => '',
             'basePath' => APPLICATION_PATH . '/modules/default' ,
         ));
-        
         
         $acl = new Model_Acl();
         $auth = Zend_Auth::getInstance();
@@ -39,8 +47,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                     'module' => '',
                     'controller' => 'error',
                     'action' => 'error')));
-        
-        return $autoloader;
     }
        
     protected function _initDoctype() {
@@ -49,75 +55,59 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view = $this->getResource('view');
         $view->setEncoding('UTF-8');
         $view->doctype('XHTML1_STRICT');
-
+		$layout = explode('/', $_SERVER['REQUEST_URI']);
+ 
+		
         Zend_Layout::startMvc(
             array(
-                'layoutPath' => APPLICATION_PATH . "/layouts/scripts",
+                'layoutPath' => APPLICATION_PATH . "/layouts/scripts/" ,
                 'layout' => 'layout'
             )
         );
         $view->addHelperPath(APPLICATION_PATH . '/modules/default/views/helpers', 'Zend_View_Helper');
         $view->addHelperPath(APPLICATION_PATH . '/../library/ZendX/JQuery/View/Helper', 'ZendX_JQuery_View_Helper');
-        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper(
-                        'ViewRenderer'
-        );
+        $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
         $viewRenderer->setView($view);
 		
-
     }
- 
-
- 	protected function _initDb(){ 
- 	    if($this->_config->resources->db) {
- 	   		$dbAdapter = Zend_Db::factory( $this->_config->resources->db->adapter,$this->_config->resources->db->params->toArray());
- 	   	    Zend_Db_Table_Abstract::setDefaultAdapter($dbAdapter);
- 	   	    Zend_Registry::set('dbAdapter', $dbAdapter);
- 	   	}
-	}
-
-	protected function _initSession() {
-		// On initialise la session
-		$session = new Zend_Session_Namespace ( 'ecommerce', true );
-		Zend_Registry::set('session',$session);
-		if(!isset($session->panier)){
-			$session->panier =  new App_Panier_Panier();
-		}
-		return $session;
-	}
 
 	
+	protected function _initPanier(){
+		$this->bootstrap('layout');
+		$layout = $this->getResource('layout');
+	 	$view = $layout->getView();
+	
+		// 	//qteArticle
+		Zend_Session::start();
+		$session = Zend_Registry::get('session');
+		$panier =  $session->panier;
+        $view->qteArticle = sizeof($panier->getLignes());
+	}
+	
 	protected function _initNavigation(){
-			//execute after db
-	 	$this->bootstrap('db');
-	 		
 		$this->bootstrap('view');
 		$this->bootstrap('layout');
 	 		
 		$layout = $this->getResource('layout');
 	 	$view = $layout->getView();
 			
-		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav1');
-	 	$view->menu1 = new Zend_Navigation($pages);
+		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'base');
+	 	$view->base = new Zend_Navigation($pages);
 	 		
-	 	$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'nav2');
-		$view->menu2 = new Zend_Navigation($pages);
+	 	$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'loggedin');
+		$view->loggedin = new Zend_Navigation($pages);
+		
+ 		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'loggedout');
+		$view->loggedout = new Zend_Navigation($pages);
 			
 		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'sidebar');
-		$sidebar = new Zend_Navigation($pages);
-		$view->sidebar = $sidebar;
-			
-		//currency
-		$currency = new Zend_Currency('fr_FR');
-		Zend_Registry::set('Zend_Currency', $currency);
-		// 
-		// 	//qteArticle
-		Zend_Session::start();
-		$session = Zend_Registry::get('session');
-		$panier =  $session->panier;
-        $view->qteArticle = sizeof($panier->getLignes());
-				
-		//store sidebar in the bootstrap registry
-		return $view->sidebar;
+		$view->sidebar = new Zend_Navigation($pages);
+		
+ 		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'admin');
+		$view->admin = new Zend_Navigation($pages);
+		
+ 		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'backend');
+		$view->backend = new Zend_Navigation($pages);
 	}
  
 }

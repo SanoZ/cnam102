@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <configdata>
-	<nav1>
+	<base>
 		<accueil>
 			<label>Accueil</label>
 			<module>default</module>
@@ -13,8 +13,22 @@
 			<controller>index</controller>
 			<action>contact</action>
 		</contact>
-	</nav1>
-	<nav2>
+	</base>
+	<loggedout>
+		<signup>
+			<label>S'enregistrer</label>
+			<module>default</module>
+			<controller>auth</controller>
+			<action>signup</action>
+		</signup>
+		<login>
+			<label>Login</label>
+			<module>default</module>
+			<controller>auth</controller>
+			<action>index</action>
+		</login>
+	</loggedout>
+	<loggedin>
 		<panier>
 			<id>nav-panier</id>
 			<icon>icon-shopping-cart icon-white</icon>
@@ -28,7 +42,7 @@
 			<icon>icon-user icon-white</icon>
 			<label>Mon compte</label>
 			<module>default</module>
-			<controller>auth</controller>
+			<controller>compte</controller>
 			<action>index</action>
 			<pages>
 				<compte>
@@ -36,7 +50,7 @@
 					<separator></separator>
 					<label>Mon compte</label>
 					<module>default</module>
-					<controller>auth</controller>
+					<controller>compte</controller>
 					<action>index</action>
 				</compte>
 				<deconnexion>
@@ -48,7 +62,7 @@
 				</deconnexion>
 			</pages>
 		</compte>
-	</nav2>
+	</loggedin>
 	<sidebar>
 		<tous>
 			<label>Tous les tableaux</label>
@@ -96,4 +110,41 @@
 			</params>
 		</dimensions>
 	</sidebar>
+	<admin>
+		<tableau>
+			<id>tableaux</id>
+			<label>Gérer les tableaux</label>
+			<module>admin</module>
+			<controller>tableau</controller>
+			<action>index</action>
+			<pages>
+				<ajout>
+					<label>Ajouter un tableau</label>
+					<module>admin</module>
+					<controller>tableau</controller>
+					<action>ajout</action>
+				</ajout>
+				<supprimer>
+					<label>Supprimer un tableau</label>
+					<module>admin</module>
+					<controller>tableau</controller>
+					<action>delete</action>
+				</supprimer>
+			</pages>
+		</tableau>
+		<commandes>
+			<label>Voir les commandes</label>
+			<module>admin</module>
+			<controller>commande</controller>
+			<action>index</action>
+		</commandes>
+	</admin>
+	<backend>
+		<access>
+			<label>Administration</label>
+			<module>admin</module>
+			<controller>index</controller>
+			<action>index</action>
+		</access>
+	</backend>
 </configdata>

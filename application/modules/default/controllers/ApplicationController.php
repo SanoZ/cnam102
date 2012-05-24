@@ -6,11 +6,15 @@ class ApplicationController extends Zend_Controller_Action{
   
     public function preDispatch(){
         parent::preDispatch();
-         
         if (!defined('__SITE_URL')) {
         	define('__SITE_URL', 'http://' . $_SERVER['HTTP_HOST']);
         }
-       	$this->view->loggedUser = $this->_loggedUser = Model_DbTable_Utilisateur::getCurrentUser();
+		$user_model = new Model_Utilisateur();
+       	$this->view->loggedUser = $this->_loggedUser = $user_model->getCurrentUser();
+
+		//currency
+		$currency = new Zend_Currency('fr_FR');
+		Zend_Registry::set('Zend_Currency', $currency);
     }
     
 }

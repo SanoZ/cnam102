@@ -1,6 +1,6 @@
 <?php
 
-class Frontend_Model_Article {
+class Model_Article {
 	
 	/*public function getArticles() {
 		

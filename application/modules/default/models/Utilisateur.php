@@ -1,25 +1,25 @@
 <?php
 
-class Model_DbTable_Utilisateur_Exception extends Exception {}
+//class Model_Utilisateur_Exception extends Exception {}
 	
 class Model_Utilisateur  
 {
 	protected $_tableClass         = 'Model_DbTable_Utilisateur';
-    protected $_data               = array(
-        'utilisateur_id'			=> '',
-        'nom'                         => '',
-        'prenom'                          => '', 
-        'adresse1'                          => '', 
-        'adresse2'                          => '', 
-        'cp'                          => '', 
-        'email'                          => '',
-        'ville'                          => '', 
-        'active'                          => '', 
-        'date_creation'                          => '', 
-       // 'password'                          => '',
-        //'salt'                          => '',
-        'role_id'                          => '' //1 user 2 admin
-    );
+	    protected $_data               = array(
+	        'utilisateur_id'			=> '',
+	        'nom'                         => '',
+	        'prenom'                          => '', 
+	        'adresse1'                          => '', 
+	        'adresse2'                          => '', 
+	        'cp'                          => '', 
+	        'email'                          => '',
+	        'ville'                          => '', 
+	        'active'                          => '', 
+	        'date_creation'                          => '', 
+	       // 'password'                          => '',
+	        //'salt'                          => '',
+	        'role_id'                          => '' //1 user 2 admin
+	    );
     /**
      * @var table Model_DbTable_User
      */
@@ -34,6 +34,16 @@ class Model_Utilisateur
     const _ROLE_NORMAL_USER = 1;
 
  
+	public function getCurrentUser(){
+        $auth = Zend_Auth::getInstance();
+        $identity = $auth->getStorage()->read();
+        if($identity){
+            return $identity;
+        } else {
+            return false;
+        }
+    }
+
     public function insert($data){
 		$data['role_id'] = self::_ROLE_NORMAL_USER;
 		$data['date_creation'] = date("Y-m-d H:i:s"); 
@@ -73,7 +83,7 @@ class Model_Utilisateur
   
     public function isAdmin()
     {
-        if (self::_ROLE_SUPER_ADMIN == $this->user_role) {
+        if (self::_ROLE_SUPER_ADMIN == $this->role_id) {
             return true;
         }
         return false;

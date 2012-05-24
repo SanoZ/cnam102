@@ -12,11 +12,14 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
         
         //mapping of the people routes
         $this->loadPeopleRouter();
+
+		$this->loadDefaultRouter();
         
         //mapping of the static routes       
         $this->loadStaticRouter();
     }
  
+	
      
     private function loadPeopleRouter()
     {
@@ -43,7 +46,31 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
         );
         $router->addRoute('person-profile-friendly', $route);
      
-    }
+    }	
+	
+	private function loadDefaultRouter(){
+		$fc = Zend_Controller_Front::getInstance();
+		$router = $fc->getRouter();
+ 
+		$route = new Zend_Controller_Router_Route_Regex(
+		    'signup',
+		    array( 'module' => 'default', 'controller' => 'auth', 'action' => 'signup')
+		);
+		$router->addRoute('signup', $route);
+		 
+		$route = new Zend_Controller_Router_Route_Regex(
+		    'login',
+		    array( 'module' => 'default', 'controller' => 'auth', 'action' => 'index')
+		);
+		$router->addRoute('login', $route);
+		
+		$route = new Zend_Controller_Router_Route_Regex(
+		    'logout',
+		    array( 'module' => 'default', 'controller' => 'auth', 'action' => 'logout')
+		);
+		$router->addRoute('logout', $route);
+		
+	}
     
     private function loadStaticRouter(){
         $fc = Zend_Controller_Front::getInstance();

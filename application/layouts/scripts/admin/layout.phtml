@@ -1,132 +1,96 @@
-<?php echo $this->doctype(); ?>
-<html xmlns="http://www.w3.org/1999/xhtml"> 
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>ZillerCMS Dashboard</title> 
-         <?php echo $this->headLink(); ?>
-         <script type="text/javascript" src="/jscript/jquery/js/jquery-1.6.4.min.js"></script>
-        <!-- Additional IE/Win specific style sheet (Conditional Comments) -->
-        <!--[if lte IE 7]>
-        <link rel="stylesheet" href="/jscript/jquery.tabs-ie.css" type="text/css" media="projection, screen">
-        <![endif]-->
-    </head>
-    <body  class="yui-skin-sam">
-        <div id="container">
-            <!-- Header Begin -->
-            <div id="container-admin-header">
-                <div class="col-half">
-                    <a href="/admin">
-                        <img class="img-logo-cms" src="/images/admin/logo-cms.png" title="" alt="" /></a>
-                </div>
-              
-                <!-- Start User Navigation -->
-                <div class="admin-user-menu">
-                    <span><a href="/" target="_blank"><img class="header-img-icon" src="/images/admin/icon-header-website.png" title="view website" alt="view website" />View website</a></span>
-                    <span><a href="/admin/settings"><img class="header-img-icon" src="/images/admin/icon-header-settings.png" title="Settings" alt="Settings" />Settings</a></span>
+<?php echo $this->doctype() ?>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <?php 
+	echo $this->headTitle();
+    echo $this->headLink();
+    echo $this->headLink()->appendStylesheet('/css/style.css')
+	?>
+	<link rel="stylesheet/less" href="/less/bootstrap.less">
+    <link rel="icon" type="image/gif" href="/img/favicon.png"/>
+	<script type="text/javascript" src="/js/less.js"></script>
+</head>
+<body>admin
+	
+	<!--TopBar-->
+	<div class="navbar">
+		<div class="navbar-inner">
+			<div class="container">
+				<div class='pull-left'>
+					<span class="badge badge-warning">&nbsp;&nbsp;</span>
+					<span class="badge badge-success">&nbsp;&nbsp;</span>
+					<span class="badge badge-info">&nbsp;&nbsp;</span>
+					<span class="badge badge-important">&nbsp;&nbsp;</span>
+					<span class="badge badge-defaut">&nbsp;&nbsp;</span>
+					<h3><a><em>Sur la toile</em></a></h3>
+				</div>
+				
+				<?php
+				if($this->loggedUser) {
+					$this->loggedin->findById('nav-panier')->set('qteArticle',$this->qteArticle);
+					$this->loggedin->findById('nav-compte')->set('label', $this->loggedInAs());
+					$this->loggedin->findById('nav-compte')->set('logged','');
+					echo $this->navigation()->menu()->setPartial(array('commun/menu.phtml','default'))->render($this->loggedin); 
+					if($this->loggedUser->isAdmin()){\
+						echo $this->navigation()->menu()->render($this->backend);
+							echo $this->navigation()->menu()->render($this->admin);
+					}
+				}else{
+					$this->loggedout->findById('signup');
+					echo $this->navigation()->menu()->setPartial(array('commun/menu.phtml','default'))->render($this->loggedout);
+				}
+				?>esdfds
+				<form class="navbar-search pull-right">
+					<i class="icon-search icon-white"></i>
+					<input type="text" class="search-query" placeholder="rechercher">
+				</form>
+				<?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->render($this->base); ?>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+	 
+		<div class="row">
+			<!--LeftBar-->
+			<div class="span3">
+				<div class="well" style="padding: 5px 0;">
+					<?php echo $this->navigation()->menu()->setUlClass('nav nav-list')->render($this->sidebar); ?>
+				</div>
+			</div>
+			<!--Content-->
+			<div class="span9">
+				<?php echo $this->layout()->content ?>
+			</div>
+		</div>
+		<!--Bottom-->
+		<hr>
+		<div>Project &copy; 2012</div>
+    </div>
 
-                    
-                    <span><a href="/admin/user"><img class="header-img-icon" src="/images/admin/icon-header-admin.png" title="account" alt="account" />Account Manager</a></span>
-                    
-                    <span><a href="<?php echo "/admin/login/logout"; ?>"><img class="header-img-icon" src="/images/admin/icon-header-logout.png" title="logout" alt="logout" />Logout</a></span>
-
-
-                    <br />You are logged in as: <?php echo $this->cuser_email; ?>
-                </div>
-                <!-- End User Navigation -->
-                
-            </div>
-            <!-- Header End -->
-            <!-- Top Navigation -->
-
-
-
-                    <div id="admin-menu-container">
-                        <ul class="admin-menu admin-menum">
-        
-                            <li class="admin-menui font-dashboard"><a class="admin-menui font-admin active dashboard" href="/admin">Dashboard</a></li>
-        
-                            <li class="admin-menui font-dashboard"><a class="admin-menui font-admin active dashboard" href="/admin/affiliates">Affiliates</a></li>
-                            
-                            <li class="admin-menui"><a class="admin-menui font-admin products" href="/admin/stores">Stores</a>
-                                <ul class="admin-menum">
-                                    <li class="admin-menui"><a class="admin-menui" href="/admin/stores/categories/">Categories</a></li>
-                                </ul>
-                            </li>
-                            <li class="admin-menui"><a class="admin-menui font-admin products" href="/admin/products">Products</a>
-                                <ul class="admin-menum">
-                                    <li class="admin-menui"><a class="admin-menui" href="/admin/product-categories/">Categories</a></li>
-                                </ul>
-                            </li>
-        
-                            <li class="admin-menui"><a class="admin-menui font-admin" href="/admin/pages/">Website Content</a>
-                                <ul class="admin-menum">
-                                        <li class="admin-menui"><a class="admin-menui" href="/admin/pages/">Pages</a></li>
-                                        <li class="admin-menui"><a class="admin-menui" href="/admin/sr">String Resources</a></li>
-                                </ul>
-                            </li>
-                            <li class="admin-menui"><a class="admin-menui font-admin" href="/admin/module">Modules</a></li>	
-                        </ul>
-                                
-                        <!-- site wide search -->
-                        <div class="sitewide-search">
-                            <form action="/admin/search-internal" method="post">
-                                <label>search:</label> <input name="query" value=""/>
-                                <input name="" type="submit" class="btn-sitewidesearch" value="" />
-                            </form>
-                        </div>
-                        <!-- end site wide search -->
-                        
-                    </div>
-        <!-- Navigation -->
-            <div id="content">
-                <div class="padding-spacer">
-                    <!-- Dynamic Area Begin -->
-                    <?php echo $this->layout()->content ?>
-                    <div class="clear"></div>
-                    <!-- Dynamic Area End -->
-                </div>
-                <div class="clear"></div>
-            </div>
-        
-        	<div class="clear"></div>
-        </div>
-        <div id="admin-footer">
-            <div class="admin-container-inner">
-                <p>CMS Developed by: <a href="http://www.ziller.com.au/">Ziller Web Solutions</a></p>
-            </div>
-        </div>
-        <!-- loading javascript for the site -->
-        <?php echo $this->headScript(); ?>
-        <!-- this is loaded in the administrator bootstrap-->
-        <!-- Cufon Font Replacement -->
-        <script type="text/javascript">
-            Cufon.replace('h1, h2, h3, .font-admin, .sitewide-search'); // Cufon custom font replacement
-        </script>
-        <!-- end Cufon -->
-        <!-- functionlaity for checkboxes -->
-        <script type="text/javascript">
-            $(document).ready(function() {
-                $('#master_check').click(
-                    function() {
-                        $("INPUT[type='checkbox']").attr('checked', $('#master_check').is(':checked'));
-                    }
-                )
-            });
-        </script>
-        <!-- END functionlaity for checkboxes -->
-        
-        <!-- tabs -->
-        <script type="text/javascript">
-            $(document).ready(
-                function(){
-                    $(function() {
-                        $('#settings-tabs').tabs( {
-                    	fxFade: true, fxSpeed: 'normal'
-                    });
-            	});
-            });
-        </script>
-        <!-- end tabs-->
-    </body>
+</body>
+<?php 
+$this->jQuery()->setLocalPath('/js/jquery.js');
+$this->jQuery()->enable();
+echo $this->jQuery();
+$this->headScript()->appendFile('/js/bootstrap-dropdown.js','text/javascript');
+echo $this->headScript();
+?>
+	<!--A supprimer en production-->
+<script type="text/javascript">
+function destroyLessCache(pathToCss) { // e.g. '/css/' or '/stylesheets/'
+	if (!window.localStorage ) {
+		return;
+	}
+	var host = window.location.host;
+	var protocol = window.location.protocol;
+	var keyPrefix = protocol + '//' + host + pathToCss;
+	for (var key in window.localStorage) {
+		if (key.indexOf(keyPrefix) === 0) {
+			delete window.localStorage[key];
+		}
+	}
+}
+destroyLessCache('/less/');
+</script>
 </html>
-
