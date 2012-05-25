@@ -17,6 +17,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 			error_reporting(E_ALL | E_STRICT);
 			ini_set('display_errors', 'on');
 		} 
+		//currency
+		$currency = new Zend_Currency('fr_FR');
+		Zend_Registry::set('Zend_Currency', $currency);
 	}
 	
 	protected function _initSession() {
@@ -60,17 +63,30 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
         Zend_Layout::startMvc(
             array(
-                'layoutPath' => APPLICATION_PATH . "/layouts/scripts/" ,
-                'layout' => 'layout'
+                'layoutPath' => APPLICATION_PATH . "/layouts/scripts",
+                'layout' => 'layout',
+                'pluginClass' => 'Common_Layout_Controller_Plugin_Layout'
             )
         );
+
         $view->addHelperPath(APPLICATION_PATH . '/modules/default/views/helpers', 'Zend_View_Helper');
         $view->addHelperPath(APPLICATION_PATH . '/../library/ZendX/JQuery/View/Helper', 'ZendX_JQuery_View_Helper');
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
         $viewRenderer->setView($view);
 		
     }
-
+/*
+$this->bootstrap('view');
+        $view = $this->getResource('view');
+        $view->doctype('XHTML1_STRICT');
+        Zend_Layout::startMvc(
+            array(
+                'layoutPath' => APPLICATION_PATH . "/layouts/scripts",
+                'layout' => 'layout',
+                'pluginClass' => 'ZFBlog_Layout_Controller_Plugin_Layout'
+            )
+        );
+*/
 	
 	protected function _initPanier(){
 		$this->bootstrap('layout');

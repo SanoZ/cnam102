@@ -11,8 +11,8 @@
     <link rel="icon" type="image/gif" href="/img/favicon.png"/>
 	<script type="text/javascript" src="/js/less.js"></script>
 </head>
-<body>admin
-	
+<body>
+	default
 	<!--TopBar-->
 	<div class="navbar">
 		<div class="navbar-inner">
@@ -26,16 +26,16 @@
 					<h3><a><em>Sur la toile</em></a></h3>
 				</div>
 				
-				<?php
+				<?php 
 				if($this->loggedUser) {
 					$this->loggedin->findById('nav-panier')->set('qteArticle',$this->qteArticle);
-					$this->loggedin->findById('nav-compte')->set('label', $this->loggedInAs());
+					$this->loggedin->findById('nav-compte')->set('label', $this->loggedUser->email);
 					$this->loggedin->findById('nav-compte')->set('logged','');
 					echo $this->navigation()->menu()->setPartial(array('commun/menu.phtml','default'))->render($this->loggedin); 
-					if($this->loggedUser->isAdmin()){
+					if($this->loggedUser->role_id == Model_Utilisateur::_ROLE_SUPER_ADMIN){
 						echo $this->navigation()->menu()->render($this->backend);
-							echo $this->navigation()->menu()->render($this->admin);
-					}
+						echo $this->navigation()->menu()->render($this->admin);
+					} 
 				}else{
 					$this->loggedout->findById('signup');
 					echo $this->navigation()->menu()->setPartial(array('commun/menu.phtml','default'))->render($this->loggedout);
