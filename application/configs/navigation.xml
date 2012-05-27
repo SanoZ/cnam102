@@ -10,8 +10,8 @@
 		<contact>
 			<label>Contact</label>
 			<module>default</module>
-			<controller>index</controller>
-			<action>contact</action>
+			<controller>contact</controller>
+			<action>index</action>
 		</contact>
 	</base>
 	<loggedout>
@@ -100,33 +100,30 @@
 				<theme>tout</theme>
 			</params>
 		</themes>
-		<dimensions>
-			<label>Par dimension</label>
-			<module>default</module>
-			<controller>article</controller>
-			<action>index</action>
-			<params>
-				<dimension>tout</dimension>
-			</params>
-		</dimensions>
 	</sidebar>
 	<admin>
 		<tableau>
 			<id>tableaux</id>
 			<label>Gérer les tableaux</label>
-			<module>admin</module>
+			<module>default</module>
 			<controller>tableau</controller>
 			<action>index</action>
 			<pages>
 				<ajout>
 					<label>Ajouter un tableau</label>
-					<module>admin</module>
+					<module>default</module>
 					<controller>tableau</controller>
-					<action>ajout</action>
+					<action>create</action>
 				</ajout>
+				<theme>
+					<label>Ajouter un thème</label>
+					<module>default</module>
+					<controller>theme</controller>
+					<action>create</action>
+				</theme>
 				<supprimer>
 					<label>Supprimer un tableau</label>
-					<module>admin</module>
+					<module>default</module>
 					<controller>tableau</controller>
 					<action>delete</action>
 				</supprimer>
@@ -134,17 +131,9 @@
 		</tableau>
 		<commandes>
 			<label>Voir les commandes</label>
-			<module>admin</module>
+			<module>default</module>
 			<controller>commande</controller>
 			<action>index</action>
 		</commandes>
 	</admin>
-	<backend>
-		<access>
-			<label>Administration</label>
-			<module>admin</module>
-			<controller>index</controller>
-			<action>index</action>
-		</access>
-	</backend>
 </configdata>

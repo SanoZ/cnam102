@@ -12,9 +12,9 @@
 				<div class=\"thumbnail\">
 					<img src=\"http://lorempixel.com/260/180/abstract/".$i."\" alt=\"\">
 					
-					<h5>".$article['nom']."</h5>
+					<h5>".$article['titre']."</h5>
 					<p>Thumbnail caption right here...</p>
-					<a class='btn btn-success btn-mini' href='".$this->linkTo('ajouter','panier','default',array('id'=>$article['id']))."'><i class='icon-shopping-cart icon-white'></i> Ajouter</a>
+					<a class='btn btn-success btn-mini' href='".$this->linkTo('ajouter','panier','default',array('id'=>$article['article_id']))."'><i class='icon-shopping-cart icon-white'></i> Ajouter</a>
 					<a class='btn btn-primary btn-mini' href=''><i class='icon-eye-open icon-white'></i>Détails</a>
 				</div>
 			</li>

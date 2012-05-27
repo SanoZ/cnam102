@@ -23,23 +23,20 @@ class CompteController extends ApplicationController
 		if ($request->isPost()) { 
 			if ($form->isValid($request->getPost())) {
 				$user = new Model_Utilisateur();
-				try{
-					$data = $form->getValues();
-					$data["utilisateur_id"] = $this->_loggedUser->utilisateur_id ;
-					if ( $user->update($data) ) {
-						$this->view->message = "Vos données ont été mis à jour.";
-					}else{
-						$this->view->message = "Erreur, Vérifiez votre email et/ou mot de passe;";
-					}
-				}catch(Exception $e){
-					$this->view->errorMessage = $e->getMessage();
+				$data = $form->getValues();
+				$data["utilisateur_id"] = $this->_loggedUser->utilisateur_id ;
+				if ( $user->update($data) ) {
+					$this->view->message = "Vos données ont été mis à jour.";
+				}else{
+					$this->view->message = "Erreur, Vérifiez votre email et/ou mot de passe;";
 				}
+			
 			}
 		}
 		$this->view->form = $form;
 	}
 
-	
+		
 	public function forgotPasswordAction(){
 
         
@@ -75,10 +72,10 @@ class CompteController extends ApplicationController
 
  	public function commandeAction()
 	{
-		$params=Zend_Controller_Front::getInstance()->getRequest()->getParams();
+		$params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
 	
 		$commandes = new Model_Commande();
-		$query = $commandes->getOrdersByCustomerId('1'); //à remplacer par le session_id du client
+		$query = $commandes->getOrdersByCustomerId($this->_loggedUser->utilisateur_id);  
 	
 		$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_DbSelect($query));
 		$paginator->setItemCountPerPage(10)
@@ -88,8 +85,8 @@ class CompteController extends ApplicationController
 	
 	public function ligneAction()
 	{	
-		$commande=Zend_Json::decode($this->_request->getParam('commande'));
-		$id=$commande['commande_id'];
+		$commande = Zend_Json::decode($this->_request->getParam('commande'));
+		$id = $commande['commande_id'];
 		$lignes = new Model_Ligne();
 		$select = $lignes->getOrderLinesByOrderId($id);
 		$results = $select->query()->fetchAll();

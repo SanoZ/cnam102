@@ -59,21 +59,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $view->setEncoding('UTF-8');
         $view->doctype('XHTML1_STRICT');
 		$layout = explode('/', $_SERVER['REQUEST_URI']);
- 
+
 		
         Zend_Layout::startMvc(
             array(
                 'layoutPath' => APPLICATION_PATH . "/layouts/scripts",
                 'layout' => 'layout',
-                'pluginClass' => 'Common_Layout_Controller_Plugin_Layout'
+                // 'pluginClass' => 'Common_Layout_Controller_Plugin_Layout'
             )
         );
 
         $view->addHelperPath(APPLICATION_PATH . '/modules/default/views/helpers', 'Zend_View_Helper');
-        $view->addHelperPath(APPLICATION_PATH . '/../library/ZendX/JQuery/View/Helper', 'ZendX_JQuery_View_Helper');
+        // $view->addHelperPath(APPLICATION_PATH . '/../library/ZendX/JQuery/View/Helper', 'ZendX_JQuery_View_Helper');
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
         $viewRenderer->setView($view);
-		
     }
 /*
 $this->bootstrap('view');
@@ -121,9 +120,7 @@ $this->bootstrap('view');
 		
  		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'admin');
 		$view->admin = new Zend_Navigation($pages);
-		
- 		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'backend');
-		$view->backend = new Zend_Navigation($pages);
+		 
 	}
  
 }

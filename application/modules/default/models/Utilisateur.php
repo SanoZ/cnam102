@@ -3,87 +3,154 @@
 //class Model_Utilisateur_Exception extends Exception {}
 	
 class Model_Utilisateur  
-{
-	protected $_tableClass         = 'Model_DbTable_Utilisateur';
-	    protected $_data               = array(
-	        'utilisateur_id'			=> '',
-	        'nom'                         => '',
-	        'prenom'                          => '', 
-	        'adresse1'                          => '', 
-	        'adresse2'                          => '', 
-	        'cp'                          => '', 
-	        'email'                          => '',
-	        'ville'                          => '', 
-	        'active'                          => '', 
-	        'date_creation'                          => '', 
-	       // 'password'                          => '',
-	        //'salt'                          => '',
-	        'role_id'                          => '' //1 user 2 admin
-	    );
+{    protected $_utilisateur_id;
+    protected $_nom;
+    protected $_prenom;
+    protected $_addresse1;
+    protected $_addresse2;
+    protected $_email;
+    protected $_ville;
+    protected $_active;
+    protected $_date_creation;
+    protected $_role_id; 
+ 
+	
+    const _ROLE_SUPER_ADMIN = 2;
+    const _ROLE_NORMAL_USER = 1;
+
+    public function __construct(array $options = null)
+    {
+        if (is_array($options)) {
+            $this->setOptions($options);
+        }
+    }
+ 
+    public function __set($name, $value)
+    {
+        $method = 'set' . $name;
+        if (('mapper' == $name) || !method_exists($this, $method)) {
+            throw new Exception('Invalid utilisateur property');
+        }
+        $this->$method($value);
+    }
+ 
+    public function __get($name)
+    {
+        $method = 'get' . $name;
+        if (('mapper' == $name) || !method_exists($this, $method)) {
+            throw new Exception('Invalid utilisateur property');
+        }
+        return $this->$method();
+    }
+ 
+	public function setUtilisateur_id($user_id){
+		$this->_utilisateur_id = (int) $user_id;
+        return $this;
+	}
+	public function getUtilisateur_id(){
+		return $this->_utilisateur_id;
+	}
+    public function setOptions(array $options)
+    {
+        $methods = get_class_methods($this);
+        foreach ($options as $key => $value) {
+            $method = 'set' . ucfirst($key);
+            if (in_array($method, $methods)) {
+                $this->$method($value);
+            }
+        }
+        return $this;
+    }
+ 
+    public function setNom($text)
+    {
+        $this->_nom = (string) $text;
+        return $this;
+    }
+
+	public function getNom(){
+		return $this->_nom;
+	}
+	public function setPrenom($text)
+    {
+        $this->_nom = (string) $text;
+        return $this;
+    }
+
+	public function getPrenom(){
+		return $this->_nom;
+	}
+	public function setAdresse1($text)
+    {
+        $this->_adresse1 = (string) $text;
+        return $this;
+    }
+
+	public function getAdresse1(){
+		return $this->_adresse1;
+	}
+	public function setAdresse2($text)
+    {
+        $this->_adresse2 = (string) $text;
+        return $this;
+    }
+
+	public function getAdresse2(){
+		return $this->_adresse2;
+	}
+	public function setEmail($text)
+    {
+        $this->_email = (string) $text;
+        return $this;
+    }
+
+	public function getEmail(){
+		return $this->_email;
+	}
+	public function setVille($text)
+    {
+        $this->_ville = (string) $text;
+        return $this;
+    }
+
+	public function getVille(){
+		return $this->_ville;
+	}
+	public function setActive($text)
+    {
+        $this->_active = $text;
+        return $this;
+    }
+
+	public function getActive(){
+		return $this->_active;
+	}
+	public function setDate_creation($text)
+    {
+        $this->_date_creation = $text;
+        return $this;
+    }
+
+	public function getDate_creation(){
+		return $this->_date_creation;
+	}	
+	public function setRole_id($text)
+    {
+        $this->_role_id = $text;
+        return $this;
+    }
+
+	public function getRole_id(){
+		return $this->_role_id;
+	}
     /**
      * @var table Model_DbTable_User
      */
     private $table;
-    
-    /**
-     * @var user Zend_Db_Table_Rowset_Abstract
-     */
-    private $user;
-    
-    const _ROLE_SUPER_ADMIN = 2;
-    const _ROLE_NORMAL_USER = 1;
-
- 
-	public function getCurrentUser(){
-        $auth = Zend_Auth::getInstance();
-        $identity = $auth->getStorage()->read();
-        if($identity){
-            return $identity;
-        } else {
-            return false;
-        }
-    }
-
-    public function insert($data){
-		$data['role_id'] = self::_ROLE_NORMAL_USER;
-		$data['date_creation'] = date("Y-m-d H:i:s"); 
-		$data['password'] = sha1($data['password']);
-		// $data['salt'] = $data['password'];
-		$user = new Model_DbTable_Utilisateur();
-	    $user->insert($data);
-	}
-    
-	public function update($data){
-		if($data["confirmPassword"] == $data['password']){
-			$user_lambda = Model_DbTable_Utilisateur::getUserByEmail($data['email']);
-			if(empty($user_lambda) ){ 
-				$this->_save($data);
-			}else{
-				if($user_lambda->utilisateur_id == $data['utilisateur_id']){
-					$this->_save($data);
-				}else{
-					throw new Model_DbTable_Utilisateur_Exception("Désolé, l'email que vous avez renseigné existe déjà dans notre base.");
-				}
-			}
-		}else{
-			throw new Model_DbTable_Utilisateur_Exception("Désolé, le password et sa confirmation ne sont pas identique. Veuillez re-essayer.");
-		}
-	}
-   
-	protected function _save($data){
-		$user_model = Model_DbTable_Utilisateur::getUserById($data["utilisateur_id"]);
-		if($user_model){
-			$data['password'] = sha1($data['password']);
-			$_db = Zend_Db_Table::getDefaultAdapter();
-			$_db->update($data, array("utilisateur_id" =>$data["utilisateur_id"]) );
-		}else{
-			throw new Model_DbTable_Utilisateur_Exception("Site en maintenance.");
-		}
-	}
-  
+     
     public function isAdmin()
     {
-        if (self::_ROLE_SUPER_ADMIN == $this->role_id) {
+        if (self::_ROLE_SUPER_ADMIN == $this->_role_id) {
             return true;
         }
         return false;

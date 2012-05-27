@@ -13,14 +13,16 @@ class Plugin_LayoutSelector extends Zend_Controller_Plugin_Abstract
 
 		// check the module and automatically set the layout
 		$layout = Zend_Layout::getMvcInstance();
-
+echo "dfaf";	die;
 		switch ($module) {
 			case 'backend':
+			echo "back-layout";
                 $layout->setLayout('backend');
                 break;
 
             case 'frontend':
-                $layout->setLayout('frontend');
+				echo "frontend";
+                $layout->setLayout('default');
 			    break;
 		}
 	}

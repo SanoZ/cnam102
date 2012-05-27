@@ -62,7 +62,7 @@ class AuthController extends ApplicationController
 		if($this->_loggedUser){
 			$this->_helper->redirector('index', 'index');
 		}
-        $user = new Model_Utilisateur();
+        
         $form = new Form_Registration();
         $this->view->form = $form;
         if($this->getRequest()->isPost()){
@@ -77,6 +77,7 @@ class AuthController extends ApplicationController
 					return;                                                                                                                                       				
 				}
                 unset($data['confirmPassword']);
+				$user = new Model_MapperUtilisateur();
                 $user->insert($data);
                 $this->_redirect('/index');
             }
