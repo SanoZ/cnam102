@@ -112,13 +112,13 @@ class Model_Tableau
     {
         return $this->_prix;
     }
-	public function setDatepublication($date_publication)
+	public function setDate_publication($date_publication)
     {
         $this->_date_publication = $date_publication;
         return $this;
     }
  
-    public function getDatepublication()
+    public function getDate_publication()
     {	
 		return $this->_date_publication;
     }
@@ -134,13 +134,13 @@ class Model_Tableau
 		return $this->_statut_id;
 	}
 	
-	public function setDatemodification($date_modification)
+	public function setDate_modification($date_modification)
     {
         $this->_date_modification = (int) $date_modification;
         return $this;
     }
  
-    public function getDatemodification()
+    public function getDate_modification()
     {
 		return $this->_date_modification;
 	}

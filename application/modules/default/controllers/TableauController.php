@@ -100,6 +100,10 @@ class TableauController extends ApplicationController
 	}
 	
 	
+	public function nouveauteAction(){
+		
+	}
+	
 
 
 }

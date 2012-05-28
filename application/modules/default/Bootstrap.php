@@ -19,6 +19,11 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
 		$fc = Zend_Controller_Front::getInstance();
 		$router = $fc->getRouter();
  		// 
+		$rss = new Zend_Controller_Router_Route_Regex(
+  	   	 	'/rss',
+                 array( 'module' => 'default', 'controller' => 'rss', 'action' => 'index') 
+             );
+		$router->addRoute('rss', $rss);
  	
  		$tableau_edit = new Zend_Controller_Router_Route_Regex(
   	   	 	'/tableau/edit/(.*)',

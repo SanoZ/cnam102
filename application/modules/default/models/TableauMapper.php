@@ -56,7 +56,7 @@ class Model_TableauMapper
                   ->setTitre($row->titre)
                   ->setImage($row->image)
                   ->setActive($row->active)
-                  ->setDatepublication($row->date_publication); 
+                  ->setDate_publication($row->date_publication); 
     }
 	// 
 	// public function fetchRow($value)
@@ -81,7 +81,7 @@ class Model_TableauMapper
                   ->setTitre($row->titre)
                   ->setImage($row->image)
                   ->setActive($row->active)
-                  ->setDatepublication($row->date_publication);
+                  ->setDate_publication($row->date_publication);
             $entries[] = $entry;
         }
         return $entries;
