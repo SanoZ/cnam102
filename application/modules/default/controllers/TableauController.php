@@ -44,27 +44,12 @@ class TableauController extends ApplicationController
 				$tableaux = new Model_TableauMapper();
 				$tableau = $tableaux->find($id,$tableau_model);
 				if(!empty($tableau)){ 
-					$test = array(
-					    'article_id' => 1,
-					    'description' =>  'testing' ,
-					    'titre' =>  'titree',
-					    'theme_id' => null,
-					    'format_id' => null,
-					    'prix' => null,
-					    'date_publication' =>  '0000-00-00 00:00:00' ,
-					    'statut_id' => null,
-					    'date_modification' => null,
-					    'stock' => null,
-					'active' => null
-					);
-					$form->populate($test);
+					$form->populate($tableau->toArray());
 				}
 			}
 
-        }		// 
-        		// 
-        		        $this->view->form = $form;
-        		// echo "l;;j;";
+        }
+		$this->view->form = $form;
 	}
 	
 	public function updateAction(){
@@ -72,38 +57,7 @@ class TableauController extends ApplicationController
 	}
 
 	//add a new tableau
-	public function createAction(){
-        $request = $this->getRequest();
-        $form    = new Form_Tableau();
-
-        if ($this->getRequest()->isPost()) {
-            if ($form->isValid($request->getPost())) { 
-	
-                $tableau = new Model_Tableau($form->getValues());
-				if ($form->image->isUploaded()) {
-					$mapper  = new Model_TableauMapper();
-					$mapper->save($tableau);	
-	                return $this->_helper->redirector('index'); 
-                
-				}else{
-				    echo "erreur avec l'image";die;
-				}
-            }
-        }
-
-        $this->view->form = $form;
-	}
-	
-	//delete 
-	public function deleteAction(){
-		
-	}
-	
-	
-	public function nouveauteAction(){
-		
-	}
-	
+ 
 
 
 }
