@@ -3,6 +3,7 @@
 class ApplicationController extends Zend_Controller_Action{
     // protected $_checkActionCookies = true;
     protected $_loggedUser;
+	protected $_siteweb = "ventes.com";
   
     public function preDispatch(){
         parent::preDispatch();

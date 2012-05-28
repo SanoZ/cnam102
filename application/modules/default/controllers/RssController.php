@@ -26,7 +26,7 @@ class RssController extends ApplicationController
 		$feed = new Zend_Feed_Writer_Feed;
         $feed->setTitle('Nouveauté - Rss Feed');
         $feed->setLink($serverUrl .".com");
-        $feed->setFeedLink('http://www.ventes.com/rss', 'atom');
+        $feed->setFeedLink('http://'.$this->_siteweb.'/rss', 'atom');
 		$feed->addAuthor(
             array(
                 'name'  => 'e-Ventes',
@@ -35,7 +35,6 @@ class RssController extends ApplicationController
             )
         );
 		$feed->setDateModified(time());
-		$feed->addHub('http://pubsubhubbub.appspot.com/');
 
 		/**
 		* Add one or more entries. Note that entries must
@@ -46,7 +45,7 @@ class RssController extends ApplicationController
 		foreach ($liste_tableaux as $i => $row) {
 				$entry = $feed->createEntry();
 				$entry->setTitle($row->titre);
-				$entry->setLink($serverUrl . ".com/test".$row->article_id); 
+				$entry->setLink($serverUrl . "/tableau/".$row->article_id); 
 				$entry->setDateModified(time());
 				$entry->setDateCreated(strtotime($row->date_publication));
 				$entry->setDescription($row->description);

@@ -13,6 +13,12 @@
 			<controller>contact</controller>
 			<action>index</action>
 		</contact>
+		<rss>
+			<label>RSS</label>
+			<module>default</module>
+			<controller>rss</controller>
+			<action>index</action>
+		</rss>
 	</base>
 	<loggedout>
 		<signup>
