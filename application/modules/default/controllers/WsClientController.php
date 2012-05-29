@@ -5,18 +5,23 @@ class WsClientController extends ApplicationController {
  
 	public function indexAction() {
 		// Récupération des 2 paramètres
-		$a = $this->getRequest()->getParam('a');
-		$b = $this->getRequest()->getParam('b');
- 
-		// Appel du WebService
-		$client = new Zend_Soap_Client('http://ventes/ws/?wsdl');
-		$result = $client->add($a, $b);
- 
+		$date = $this->getRequest()->getParam('date');
+		$info = $this->getRequest()->getParam('info');
+ 		
+		try{
+			$client = new Zend_Soap_Client('http://ventes/ws/?wsdl'); 
+			$result = $client->add($date, $info);
+			
+	 	} catch (SoapFault $s) {
+		  die('ERROR: [' . $s->faultcode . '] ' . $s->faultstring);
+		} catch (Exception $e) {
+		  die('ERROR: ' . $e->getMessage());
+		} 
 		// Passage des informations à la vue
-		$this->view->a = $a;
-		$this->view->b = $b;
+		$this->view->date = $date;
+		$this->view->info = $info;
 		$this->view->result = $result;
-	}
- 
+	 
+ }
 }
 ?>

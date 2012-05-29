@@ -2,31 +2,29 @@
 
 class Model_Article {
 	
-	public function getFilteredArticles($params) {
-		$whereArray = array();
+	public function getFilteredArticles(array $params, $paginator= false) { 
 		
-		if(is_array($params)){
+		$select = Zend_Db_Table::getDefaultAdapter()->select();
+		$select->from('articles'); 
+		
 			foreach($params as $key => $value) {
 				
-				if($value != "tout") {
-					
+				if(!empty($value)) {
 					switch($key) {
-						case "theme":
-							$whereArray['theme_id'] = $value;
+						case "theme": 
+							$select->where("theme_id = ?", $value);
 							break;
-						case "dimension":
-							$whereArray['dimension_id'] = $value;
+						case "dimension":echo "dimension".$value;
+								$select->where("dimension_id = ?", $value);
 							break;
 					}
 				}
 			}
-		}
-		
-		$select = Zend_Db_Table::getDefaultAdapter()->select();
-		$select->from('articles');
-		
-		foreach($whereArray as $key => $value) {
-			$select->where("{$key} = ?", $value);
+			if(isset($params['date'])){
+				$select->where("date_publication >= ?", $params['date']);
+			} 
+		if($paginator){
+			return $select->query();
 		}
 		return $select;
 	}

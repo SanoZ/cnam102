@@ -4,28 +4,15 @@ require_once('ApplicationController.php');
 class ArticleController extends ApplicationController
 { 
     public function indexAction()
-    {
-		//$this->_getParam ne fonctionne pas, why ?
-		// $this->_request->getParam('id', 0);
-		$params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
-		$articles = new Model_Article();
+    { 
 		
-		if(isset($params['tableau'])) {
-			switch ($params['tableau']) {
-				case "tout":
-					$query = $articles->getFilteredArticles($params);
-					break;
-				case "nouveau":
-					$query = $articles->getFilteredArticles($params);
-					break;
-				case "populaire":
-					$query = $articles->getFilteredArticles($params);
-				break;
-			}
-		}
-		else {
-			$query = $articles->getFilteredArticles($params);
-		}
+		//$this->_getParam ne fonctionne pas, why ?
+		$params = array();
+		$params['tableau'] =  $this->_request->getParam('tableau', "");
+		$params['theme']  =  $this->_request->getParam('theme', "");
+		
+		$articles = new Model_Article(); 
+		$query = $articles->getFilteredArticles( $params);
 		
 		$paginator = new Zend_Paginator(new Zend_Paginator_Adapter_DbSelect($query));
 		$paginator->setItemCountPerPage(3)
@@ -83,7 +70,7 @@ class ArticleController extends ApplicationController
 	}
  	
 	public function createAction(){
-		if($this->_loggedUser->role_id != Model_Utilisateur::_ROLE_SUPER_ADMIN)){
+		if($this->_loggedUser->role_id != Model_Utilisateur::_ROLE_SUPER_ADMIN){
 			$this->_helper->redirector('index'); 
 			exit;
 		}

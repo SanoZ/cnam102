@@ -5,9 +5,11 @@ require_once('ApplicationController.php');
 class WsController extends ApplicationController {
  
 	public function indexAction() {
+		$this->getHelper('viewRenderer')->setNoRender(true);
+		
 		if (is_null($this->getRequest()->getParam('wsdl'))) {
 			// Traitement de la requête
-			$server = new Zend_Soap_Server('http://'.$this->_siteweb.'/ws/?wsdl');
+			$server = new Zend_Soap_Server('http://ventes/ws/?wsdl');
 			$server->setClass('WebService');
 			$server->handle();
 		} else {
