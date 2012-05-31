@@ -2,6 +2,21 @@
 
 class Model_Article {
 	
+	public function find($id){
+		if(is_int($id)){
+			
+			$res_array = array();
+			$select = Zend_Db_Table::getDefaultAdapter()->select();
+			$select->from('articles');
+			$select->where("article_id = ?" ,$id); 
+			$res = $select->query();  
+			foreach ($res as $val => $article){ 
+				$res_array [$val] = $article;
+			}
+			return $res_array;	
+		}
+		return false;
+	}
 	public function getFilteredArticles(array $params, $paginator = true) { 
 		
 		$select = Zend_Db_Table::getDefaultAdapter()->select();
@@ -53,5 +68,27 @@ class Model_Article {
 		return $select;
 		  
 	}
+	public function save($tableau)
+    {  
+        $data = array(
+            'titre'   => $tableau['titre'],
+            'description' => $tableau['description'],
+            'theme_id' => $tableau['theme_id'],
+            'date_publication' => date('Y-m-d H:i:s'),
+            'date_modification' => date('Y-m-d H:i:s'),
+            'stock' => 1,
+            'active' =>  $tableau['active'],
+            'image' =>  $tableau['image']
+        ); 
+	
+	$table = Zend_Db_Table::getDefaultAdapter();
+        if (null === ($id = $tableau['article_id'] ) ) {
+            unset($data['article_id']);
+			$where = $table->getAdapter()->find('article_id = ?', $data['article_id']);
+            $table->insert($data,$data['article_id']);
+        } else {
+            $table->update($data, array('article_id = ?' => $id));
+        }
+    }
 	
 }

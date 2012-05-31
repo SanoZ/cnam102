@@ -107,34 +107,25 @@
 			</params>
 		</themes>
 	</sidebar>
-	<admin>
-		<tableau>
-			<id>tableaux</id>
-			<label>Gérer les tableaux</label>
-			<module>default</module>
-			<controller>tableau</controller>
-			<action>index</action>
-			<pages>
-				<ajout>
-					<label>Ajouter un tableau</label>
-					<module>default</module>
-					<controller>tableau</controller>
-					<action>create</action>
-				</ajout>
-				<theme>
-					<label>Ajouter un thème</label>
-					<module>default</module>
-					<controller>theme</controller>
-					<action>create</action>
-				</theme>
-				<supprimer>
-					<label>Supprimer un tableau</label>
-					<module>default</module>
-					<controller>tableau</controller>
-					<action>delete</action>
-				</supprimer>
-			</pages>
-		</tableau>
+	<admin> 
+			<ajout>
+				<label>Ajouter un tableau</label>
+				<module>default</module>
+				<controller>article</controller>
+				<action>create</action>
+			</ajout>
+			<theme>
+				<label>Ajouter un thème</label>
+				<module>default</module>
+				<controller>theme</controller>
+				<action>create</action>
+			</theme>
+			<supprimer>
+				<label>Supprimer un tableau</label>
+				<module>default</module>
+				<controller>article</controller>
+				<action>delete</action>
+			</supprimer> 
 		<commandes>
 			<label>Voir les commandes</label>
 			<module>default</module>

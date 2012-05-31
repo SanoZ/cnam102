@@ -29,24 +29,26 @@ class ArticleController extends ApplicationController
 		
 		$request = $this->getRequest();
         $form    = new Form_Tableau();
-  
 
-        if ($this->getRequest()->isPost()) {
-        	if ($form->isValid($request->getPost())) {
-	            $tableau = new Model_Tableau($form->getValues());
-	            $mapper  = new Model_TableauMapper();
-	            $mapper->save($tableau);
+
+        if ($this->getRequest()->isPost()) {  
+        	if ($form->isValid($request->getPost())) { 
+	            $tableau = new Model_Article(); 
+	            $tableau->save($form->getValues());
 	            return $this->_helper->redirector('index');
-	        }
-       } else {
-            $id = (int)$this->_request->getParam('id', 0);
-            if ($id > 0) {
-          		$tableau_model = new Model_Tableau();
-				$tableaux = new Model_TableauMapper();
-				$tableau = $tableaux->find($id,$tableau_model);
-				if(!empty($tableau)){ 
-					$form->populate($tableau->toArray());
+	        } 
+       } else {  
+           $id = (int)$this->_request->getParam('id', 12);
+           if ($id > 0) {  
+          		$tableau_model = new Model_Article(); 
+				$tableau = $tableau_model->find($id );  
+				if(!empty($tableau[0])){ 
+					$form->populate($tableau[0]);
+				}else{ 
+					$this->_helper->redirector("create");
 				}
+			}else{ 
+				$this->_helper->redirector("create");
 			}
 
         }

@@ -5,8 +5,10 @@ class Form_Tableau extends Zend_Form
     {
         // La méthode HTTP d'envoi du formulaire
         $this->setMethod('post');
- 
-        // Un élément Email
+
+ 		$this->addElement('hidden', 'article_id');
+
+
         $this->addElement('text', 'titre', array(
             'label'      => 'Titre :',
             'required'   => true,
