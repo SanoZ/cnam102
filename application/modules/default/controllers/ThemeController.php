@@ -4,6 +4,10 @@ class ThemeController extends Zend_Controller_Action
 {
 
 	public function preDispatch(){
+		if($this->_loggedUser->role_id != Model_Utilisateur::_ROLE_SUPER_ADMIN){
+			$this->_helper->redirector("index");
+			exit;
+		}
 	}
     public function init()
     {

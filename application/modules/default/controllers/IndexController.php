@@ -11,6 +11,7 @@ class IndexController extends ApplicationController
 
     public function indexAction()
     {
+	 
         // action body
 		//$this->view->bodyClass = 'home';
     }

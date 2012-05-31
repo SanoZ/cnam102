@@ -39,9 +39,10 @@
 					echo $this->navigation()->menu()->setPartial(array('commun/menu.phtml','default'))->render($this->loggedout);
 				}
 				?>
-				<form class="navbar-search pull-right">
+				<form class="navbar-search pull-right" id ="search_form" method="post"  name ="search_form" action="search">
 					<i class="icon-search icon-white"></i>
-					<input type="text" class="search-query" placeholder="rechercher">
+					<input name="recherche" id="recherche" type="text" class="search-query" placeholder="rechercher">
+					<input type="submit" id="confirm" name="confirm" value="Ok">
 				</form>
 				<?php echo $this->navigation()->menu()->setUlClass('nav pull-right')->render($this->base); ?>
 			</div>

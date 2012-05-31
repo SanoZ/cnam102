@@ -64,28 +64,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Layout::startMvc(
             array(
                 'layoutPath' => APPLICATION_PATH . "/layouts/scripts",
-                'layout' => 'layout',
-                // 'pluginClass' => 'Common_Layout_Controller_Plugin_Layout'
+                'layout' => 'layout'
             )
         );
 
         $view->addHelperPath(APPLICATION_PATH . '/modules/default/views/helpers', 'Zend_View_Helper');
-        // $view->addHelperPath(APPLICATION_PATH . '/../library/ZendX/JQuery/View/Helper', 'ZendX_JQuery_View_Helper');
+        $view->addHelperPath(APPLICATION_PATH . '/../library/ZendX/JQuery/View/Helper', 'ZendX_JQuery_View_Helper');
         $viewRenderer = Zend_Controller_Action_HelperBroker::getStaticHelper('ViewRenderer');
         $viewRenderer->setView($view);
     }
-/*
-$this->bootstrap('view');
-        $view = $this->getResource('view');
-        $view->doctype('XHTML1_STRICT');
-        Zend_Layout::startMvc(
-            array(
-                'layoutPath' => APPLICATION_PATH . "/layouts/scripts",
-                'layout' => 'layout',
-                'pluginClass' => 'ZFBlog_Layout_Controller_Plugin_Layout'
-            )
-        );
-*/
+ 
 	
 	protected function _initPanier(){
 		$this->bootstrap('layout');
@@ -97,7 +85,19 @@ $this->bootstrap('view');
 		$session = Zend_Registry::get('session');
 		$panier =  $session->panier;
         $view->qteArticle = sizeof($panier->getLignes());
-	}
+	} 
+	
+	protected function _initDatabase()
+	  {
+		$conf = Zend_Registry::get('config' );
+	    $db = new Zend_Db_Adapter_Pdo_Mysql(array(
+	        'host'     => $conf->resources->db->params->host ,
+	        'username' => $conf->resources->db->params->username,
+	        'password' => $conf->resources->db->params->password,
+	        'dbname'   => $conf->resources->db->params->dbname
+	    ));
+	    Zend_Registry::set('Zend_Db', $db); 
+	  }
 	
 	protected function _initNavigation(){
 		$this->bootstrap('view');

@@ -18,13 +18,14 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
 	private function loadDefaultRouter(){
 		$fc = Zend_Controller_Front::getInstance();
 		$router = $fc->getRouter();
- 		// 
-		$rss = new Zend_Controller_Router_Route_Regex(
-  	   	 	'/rss',
-                 array( 'module' => 'default', 'controller' => 'rss', 'action' => 'index') 
+ 		
+ 		$tableau_show = new Zend_Controller_Router_Route_Regex(
+  	   	 	'/tableau/(.*)',
+                 array( 'module' => 'default', 'controller' => 'tableau', 'action' => 'show'),
+                 array( 1 => 'id')
              );
-		$router->addRoute('rss', $rss);
- 	
+		$router->addRoute('tableau_show', $tableau_show);
+		
  		$tableau_edit = new Zend_Controller_Router_Route_Regex(
   	   	 	'/tableau/edit/(.*)',
                  array( 'module' => 'default', 'controller' => 'tableau', 'action' => 'edit'),
@@ -61,15 +62,15 @@ class Default_Bootstrap extends Zend_Application_Module_Bootstrap
 	}
     
     private function loadStaticRouter(){
-        $fc = Zend_Controller_Front::getInstance();
-        $router = $fc->getRouter();
-
-        /*search internal controller*/
-        $route = new Zend_Controller_Router_Route_Static(
-            "isearch",
-            array('module' => 'default', 'controller' => 'search', 'action' => 'index')
-        );
-        $router->addRoute("isearch", $route);
+        // $fc = Zend_Controller_Front::getInstance();
+        //        $router = $fc->getRouter();
+        // 
+        //        /*search internal controller*/
+        //        $route = new Zend_Controller_Router_Route(
+        //            "search",
+        //            array('module' => 'default', 'controller' => 'search', 'action' => 'index')
+        //        );
+        //        $router->addRoute("search", $route);
     }
   
 
