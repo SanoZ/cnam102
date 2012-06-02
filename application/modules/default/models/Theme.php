@@ -82,4 +82,14 @@ class Model_Theme
     {
 		return $this->_active;
 	}
+	
+	function ToArray()
+	{
+		$array = array();
+		foreach($this as $member => $data)
+		{
+			$array[substr($member,1,strlen($member))] = $data;
+		}
+		return $array;
+	}
 }

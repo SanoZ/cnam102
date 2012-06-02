@@ -1,0 +1,20 @@
+<div>
+<ul class="thumbnails"> 
+	<div class="thumbnail">
+		<img src="/tableaux/<?php echo $this->article['image'];?>" />
+		
+		<h5><?php echo $this->article['titre'];?></h5>
+		<a class='btn btn-success btn-mini' href='<?php $this->linkTo('ajouter','panier','default', array('id'=>$this->article['article_id']));?>'>
+			<i class='icon-shopping-cart icon-white'></i> Ajouter au caddie
+		</a>
+		<br />
+		<a class='btn btn-primary btn-mini' href='/article/<?php echo $this->article['article_id'];?>'>
+			<i class='icon-eye-open icon-white'></i>Détails
+		</a>
+		<?php if(!empty($this->loggedUser) && $this->loggedUser->role_id == Model_Utilisateur::_ROLE_SUPER_ADMIN){ ?>
+		<br />
+		<a class='btn btn-primary btn-mini' href='/article/edit/<?php echo $this->article['article_id'];?>'><i class='icon-eye-open icon-white'></i>Editer</a>
+		<?php }?>
+	</div>
+	  
+</div>

@@ -39,7 +39,7 @@
 					echo $this->navigation()->menu()->setPartial(array('commun/menu.phtml','default'))->render($this->loggedout);
 				}
 				?>
-				<form class="navbar-search pull-right" id ="search_form" method="post"  name ="search_form" action="search">
+				<form class="navbar-search pull-right" id ="search_form" method="post"  name ="search_form" action="/search">
 					<i class="icon-search icon-white"></i>
 					<input name="recherche" id="recherche" type="text" class="search-query" placeholder="rechercher">
 					<input type="submit" id="confirm" name="confirm" value="Ok">

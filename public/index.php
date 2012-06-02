@@ -1,4 +1,5 @@
 <?php
+try{
 error_reporting(E_ALL|E_STRICT);
 // Define path to application directory
 defined('APPLICATION_PATH')
@@ -27,4 +28,6 @@ $application = new Zend_Application(
 );
 $application->bootstrap()
             ->run();
- // $this->_helper->redirector->gotoUrlAndExit('user/edit/' . $id);
+}catch(Exception $e){
+	echo $e->getMEssage();die;
+}

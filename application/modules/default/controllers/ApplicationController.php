@@ -27,5 +27,25 @@ class ApplicationController extends Zend_Controller_Action{
 		    return false;
 		}
 	}
+ 
+	protected function _initPanier(){
+		$this->bootstrap('layout');
+		$layout = $this->getResource('layout');
+	 	$view = $layout->getView();
+	 
+		Zend_Session::start();
+		$session = Zend_Registry::get('session');
+		if(!isset($session->panier)){
+			$session->panier = new Model_Panier();
+		}
+		$panier =  $session->panier;
+		$this->view->qteArticle = sizeof($panier->getLignes());
+	}
+	
+	
+	protected function getPanier() {
+        // $session = Zend_Registry::get('session');
+        // return $session->panier;
+    }
     
 }

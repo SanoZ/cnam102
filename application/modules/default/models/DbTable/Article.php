@@ -4,12 +4,7 @@ class Model_DbTable_Article extends Zend_Db_Table_Abstract
 {
 
     protected $_name = 'articles';
-
-	public function getArticles()
-    {		
-        $select = $this->select();
-        return $this->fetchAll($select);
-    }
-
+    protected $_primary = 'article_id' ;
+ 
 
 }

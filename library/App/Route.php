@@ -10,16 +10,23 @@ class App_Route {
 			$opts['action'] = $action;
 			$opts['controller'] = $controller;
 			$opts['module'] = $module;
-
+			
+			$param = "";
 			if ($params){
 				foreach ($params as $key => $value){
 					$opts[$key] = $value;
+					$param .= "/". $value;
 				}
 			}
-
-	        $router = Zend_Controller_Front::getInstance()->getRouter();
-	        $url = $router->assemble($opts, null, true);
-	
+			
+			$url = "/".$controller;
+			if ($action != 'index' ){
+				$url .= "/".$action;
+			} 
+			if(!empty($param)){
+				$url .= $param;
+			}
+	       
 	        return $url;
 		}else{
 			return "/".$uri;

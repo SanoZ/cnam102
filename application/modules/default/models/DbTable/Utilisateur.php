@@ -4,7 +4,6 @@ class Model_DbTable_Utilisateur extends Zend_Db_Table_Abstract
 {
 
     protected $_name = 'utilisateurs';
-
     protected $_primary		= 'utilisateur_id';
     // protected $_rowClass	= 'Model_Utilisateur';
 
@@ -26,11 +25,9 @@ class Model_DbTable_Utilisateur extends Zend_Db_Table_Abstract
         return false;
     }
 
-/*
-if(!Zend_Auth::getInstance()->hasIdentity())
-        {
-            $this->_redirect('dev/login/index');
-        }
-*/
+	static public function isEmailRegistered($email){
+		return false;
+	}
+
 }
 

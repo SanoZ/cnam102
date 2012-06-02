@@ -21,15 +21,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		$currency = new Zend_Currency('fr_FR');
 		Zend_Registry::set('Zend_Currency', $currency);
 	}
-	
-	protected function _initSession() {
-		// On initialise la session
-		$session = new Zend_Session_Namespace ( 'ecommerce', true );
-		Zend_Registry::set('session',$session);
-		if(!isset($session->panier)){
-			$session->panier =  new App_Panier_Panier();
-		}
-	}
+
 	
 	protected function _initAutoload() {
         
@@ -74,18 +66,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $viewRenderer->setView($view);
     }
  
-	
-	protected function _initPanier(){
-		$this->bootstrap('layout');
-		$layout = $this->getResource('layout');
-	 	$view = $layout->getView();
-	
-		// 	//qteArticle
-		Zend_Session::start();
-		$session = Zend_Registry::get('session');
-		$panier =  $session->panier;
-        $view->qteArticle = sizeof($panier->getLignes());
-	} 
+	protected function _initSession() {
+		// On initialise la session 
+		$session = new Zend_Session_Namespace ( 'ecommerce', true );
+		Zend_Registry::set('session',$session);
+	}
 	
 	protected function _initDatabase()
 	  {

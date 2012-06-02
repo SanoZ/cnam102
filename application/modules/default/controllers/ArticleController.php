@@ -1,16 +1,35 @@
 ﻿<?php
-
 require_once('ApplicationController.php');	
 class ArticleController extends ApplicationController
 { 
+	
+	public function preDispatch(){
+        parent::preDispatch(); 
+		
+	}
+	
+	public function showAction(){
+		
+		$article_id = $this->_request->getParam('id', ""); 
+		$model_article = new Model_Article();
+		$this->view->article = $model_article->find($article_id);
+		if(empty($this->view->article)){
+			$this->_helper->redirector("index");
+			exit;
+		} 
+		try{
+			//on met a jour la table historique
+			Model_DbTable_HistoriqueConsultation::ajoutConsultation( Zend_Session::getId(),$article_id);
+		}catch(Exception $e){
+			//TODO -> loguer cette erreur dans le fichier de log.
+		}
+	}
     public function indexAction()
     { 
-		
-		//$this->_getParam ne fonctionne pas, why ?
 		$params = array();
 		$params['tableau'] =  $this->_request->getParam('tableau', "");
 		$params['theme']  =  $this->_request->getParam('theme', "");
-		
+
 		$articles = new Model_Article(); 
 		$query = $articles->getFilteredArticles( $params);
 		
@@ -37,39 +56,38 @@ class ArticleController extends ApplicationController
 	            $tableau->save($form->getValues());
 	            return $this->_helper->redirector('index');
 	        } 
-       } else {  
-           $id = (int)$this->_request->getParam('id', 12);
-           if ($id > 0) {  
+       } else { 
+           $id = (int)$this->_request->getParam('id', 0); 
+           if ($id > 0) {
           		$tableau_model = new Model_Article(); 
-				$tableau = $tableau_model->find($id );  
-				if(!empty($tableau[0])){ 
-					$form->populate($tableau[0]);
+				$tableau = $tableau_model->find($id );   
+				if(!empty($tableau)){ 
+					$form->populate($tableau);
 				}else{ 
 					$this->_helper->redirector("create");
 				}
 			}else{ 
 				$this->_helper->redirector("create");
-			}
-
+			} 
         }
         $this->view->form = $form;
 	}
 	
 	
-	public function articleAction ()
-	{
-		$model_theme = new Model_ThemeMapper();
-        $themes = $model_theme->fetchAll();
-		foreach ($themes as $theme) {
-			$page = Array('label'=>$theme->theme,
-						'module'=>true,
-						'controller'=>true,
-						'action'=>$theme->theme
-						);
-			$this->_helper->navigation->add($page);
-			
-		}
-	}
+	// public function articleAction ()
+	// {
+	// 	$model_theme = new Model_ThemeMapper();
+	//         $themes = $model_theme->fetchAll();
+	// 	foreach ($themes as $theme) {
+	// 		$page = Array('label'=>$theme->theme,
+	// 					'module'=>true,
+	// 					'controller'=>true,
+	// 					'action'=>$theme->theme
+	// 					);
+	// 		$this->_helper->navigation->add($page);
+	// 		
+	// 	}
+	// }
  	
 	public function createAction(){
 		if($this->_loggedUser->role_id != Model_Utilisateur::_ROLE_SUPER_ADMIN){

@@ -40,15 +40,15 @@ class RssController extends ApplicationController
 		* Add one or more entries. Note that entries must
 		* be manually added once created.
 		*/
-		$tableaux = new Model_TableauMapper();
-        $liste_tableaux = $tableaux->fetchAll();
-		foreach ($liste_tableaux as $i => $row) {
+		$article_model = new Model_Article(); 
+		$articles = $article_model->getFilteredArticles( array(), false);  
+		foreach ($articles as $i => $row) { 
 				$entry = $feed->createEntry();
-				$entry->setTitle($row->titre);
-				$entry->setLink($serverUrl . "/tableau/".$row->article_id); 
+				$entry->setTitle($row['titre']);
+				$entry->setLink($serverUrl . "/article/".$row['article_id']); 
 				$entry->setDateModified(time());
-				$entry->setDateCreated(strtotime($row->date_publication));
-				$entry->setDescription($row->description);
+				$entry->setDateCreated(strtotime($row['date_publication']));
+				$entry->setDescription($row['description']);
 				
 				$feed->addEntry($entry);
 		}

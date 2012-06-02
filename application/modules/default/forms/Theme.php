@@ -5,6 +5,8 @@ class Form_Theme extends Zend_Form
     {
         // La méthode HTTP d'envoi du formulaire
         $this->setMethod('post');
+
+ 		$this->addElement('hidden', 'article_id');
  
         $this->addElement('text', 'theme', array(
             'label'      => 'Thème :',

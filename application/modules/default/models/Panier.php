@@ -1,9 +1,7 @@
 <?php
-
 //on ne gère pas de qté donc pas de fonction pour modifier la quantité.
 //Une fonction pour ajouter un article s'il n'est pas présent dans le panier
 //Une fonction pour supprimer un article du panier
-
 class Model_Panier {
 
 	protected $_lignes = array();
@@ -11,10 +9,10 @@ class Model_Panier {
 	
     public function ajouterArticle($articleId) {
         if (! isset($this->_lignes[$articleId])) {
-            $this->_lignes[$articleId] = new App_Panier_Ligne($articleId);
-		$this->_lignes[$articleId]->ajouter();
-		$article = $this->_lignes[$articleId]->getArticle();
-		$this->_total += $article['prix'];
+            $this->_lignes[$articleId] = new Model_Ligne($articleId);
+			$this->_lignes[$articleId]->ajouter();
+			$article = $this->_lignes[$articleId]->getArticle();
+			$this->_total += $article['prix'];
         }
     }
 

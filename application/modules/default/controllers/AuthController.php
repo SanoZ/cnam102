@@ -77,12 +77,12 @@ class AuthController extends ApplicationController
 					return;                                                                                                                                       				
 				}
                 unset($data['confirmPassword']);
-				$user = new Model_MapperUtilisateur();
+				$user = new Model_UtilisateurMapper();
                 $user->insert($data);
-                $this->_redirect('/index');
+                $this->_redirect('/auth');
             }
         }
-		$this->view->errorMessage = "Erreur. Veuillez essayer à nouveau.";
+		$this->view->errorMessage = "Erreur. Veuillez essayer à nouveau."; 
     }
 	public function logoutAction()
 	{

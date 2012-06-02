@@ -15,12 +15,17 @@
 						<i class='icon-shopping-cart icon-white'></i> Ajouter au caddie
 					</a>
 					<br />
-					<a class='btn btn-primary btn-mini' href='/tableaux/<?php echo $article['article_id'];?>'><i class='icon-eye-open icon-white'></i>Détails</a>
+					<a class='btn btn-primary btn-mini' href='/article/<?php echo $article['article_id'];?>'>
+						<i class='icon-eye-open icon-white'></i>Détails
+					</a>
+					<?php if(!empty($this->loggedUser) && $this->loggedUser->role_id == Model_Utilisateur::_ROLE_SUPER_ADMIN){ ?>
+					<br />
+					<a class='btn btn-primary btn-mini' href='/article/edit/<?php echo $article['article_id'];?>'><i class='icon-eye-open icon-white'></i>Editer</a>
+					<?php }?>
 				</div>
 			</li>
 		 
 	<?php	} ?>
 	</ul>
-<?php echo $this->paginationControl($this->paginator,'sliding','pagination.phtml');
-	?>
+<?php echo $this->paginationControl($this->paginator,'sliding','pagination.phtml'); ?>
 </div>

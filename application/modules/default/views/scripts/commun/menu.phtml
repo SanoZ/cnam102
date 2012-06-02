@@ -3,7 +3,7 @@
 foreach ($this->container as $page) { 
 	
 	$liClass = $page->isActive() ? " class='active'" : "";
-	$label = isset($page->uri) ? $page->uri :$page->label;
+	$label = $page->label;
 	
 	if(isset($page->icon)) {
 		$label= "<i class='".$page->icon."'></i> ".$label; 

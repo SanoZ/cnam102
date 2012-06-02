@@ -6,6 +6,7 @@
 			<module>default</module>
 			<controller>index</controller>
 			<action>index</action>
+			<uri></uri>
 		</accueil>
 		<contact>
 			<label>Contact</label>
@@ -18,7 +19,7 @@
 			<module>default</module>
 			<controller>rss</controller>
 			<action>index</action>
-		</rss>
+		</rss>	
 	</base>
 	<loggedout>
 		<signup>
@@ -26,12 +27,14 @@
 			<module>default</module>
 			<controller>auth</controller>
 			<action>signup</action>
+			<uri>signup</uri>
 		</signup>
 		<login>
 			<label>Login</label>
 			<module>default</module>
 			<controller>auth</controller>
 			<action>index</action>
+			<uri>login</uri>
 		</login>
 	</loggedout>
 	<loggedin>
@@ -96,36 +99,15 @@
 			<params>
 				<tableau>populaire</tableau>
 			</params>
-		</populaires>
-		<themes>
-			<label>Par thème</label>
-			<module>default</module>
-			<controller>article</controller>
-			<action>index</action>
-			<params>
-				<theme>tout</theme>
-			</params>
-		</themes>
+		</populaires> 
 	</sidebar>
 	<admin> 
-			<ajout>
-				<label>Ajouter un tableau</label>
-				<module>default</module>
-				<controller>article</controller>
-				<action>create</action>
-			</ajout>
-			<theme>
-				<label>Ajouter un thème</label>
-				<module>default</module>
-				<controller>theme</controller>
-				<action>create</action>
-			</theme>
-			<supprimer>
-				<label>Supprimer un tableau</label>
-				<module>default</module>
-				<controller>article</controller>
-				<action>delete</action>
-			</supprimer> 
+		<theme>
+			<label>Liste des thèmes</label>
+			<module>default</module>
+			<controller>theme</controller>
+			<action>index</action>
+		</theme> 
 		<commandes>
 			<label>Voir les commandes</label>
 			<module>default</module>

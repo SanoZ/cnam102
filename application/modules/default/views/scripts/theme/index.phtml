@@ -8,7 +8,7 @@ Thèmes : <br />
 	
     <?php foreach ($this->entries as $entry): ?>
 	<tr>
-    	<td><?php echo $this->escape($entry->theme) ?></td>
+    	<td><?php echo $this->escape($entry->theme) ?> <a href="/theme/edit/<?php echo $entry->theme_id ;?>">edit</a></td>
 	    <td><?php echo $this->escape($entry->active) ?></td>
 	</tr>
     <?php endforeach ?>

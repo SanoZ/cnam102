@@ -1,13 +1,14 @@
 <?php
-// require_once('Admin_ApplicationController.php');
-class ThemeController extends Zend_Controller_Action
+require_once('ApplicationController.php');
+class ThemeController extends ApplicationController
 {
 
 	public function preDispatch(){
-		if($this->_loggedUser->role_id != Model_Utilisateur::_ROLE_SUPER_ADMIN){
-			$this->_helper->redirector("index");
+        parent::preDispatch();
+		if(empty($this->_loggedUser)  || $this->_loggedUser->role_id != Model_Utilisateur::_ROLE_SUPER_ADMIN){
+			$this->_redirect('index');
 			exit;
-		}
+		} 
 	}
     public function init()
     {
@@ -19,8 +20,8 @@ class ThemeController extends Zend_Controller_Action
 	}
 	//list of all themex
     public function indexAction()
-    {
-		$theme = new Model_ThemeMapper();
+    { 
+		$theme = new Model_ThemeMapper(); 
         $this->view->entries = $theme->fetchAll();
     }
 	
@@ -36,24 +37,45 @@ class ThemeController extends Zend_Controller_Action
                 return $this->_helper->redirector('index');
             }
         }
-		else {
+		else {  
             $id = (int)$this->_request->getParam('id', 0);
             if ($id > 0) {
-                $tableaux = new Model_Tableau();
-                $tableau = $tableaux->fetchRow('article_id='.$id);
-                $form->populate($tableau->toArray());
-            }
+ 
+				$theme = new Model_Theme($form->getValues());
+                $theme_mapper= new Model_ThemeMapper(); 
+				$theme = $theme_mapper->find($id, $theme);
+				
+				if (!empty($theme)){ 
+	 				$form->populate($theme->toArray() ); 
+				}else{ 
+					 $this->_helper->redirector("create");
+				} 
+				 
+            }else{ 
+				 $this->_helper->redirector("create");
+			}
         }
+ 		$this->view->form =  $form;
 	}
+	
+	
 	public function updateAction(){
-		
+		if($this->_loggedUser->role_id != Model_Utilisateur::_ROLE_SUPER_ADMIN){
+			$this->_helper->redirector("index");
+			exit;
+		}
+		//TODO
 	}
 
 	//add a new theme
 	public function createAction(){
+		if($this->_loggedUser->role_id != Model_Utilisateur::_ROLE_SUPER_ADMIN){
+			$this->_helper->redirector("index");
+			exit;
+		}
         $request = $this->getRequest();
         $form    = new Form_Theme();
-
+ 
         if ($this->getRequest()->isPost()) {
             if ($form->isValid($request->getPost())) {
                 $theme = new Model_Theme($form->getValues());
@@ -68,7 +90,10 @@ class ThemeController extends Zend_Controller_Action
 	
 	//delete 
 	public function deleteAction(){
-		
+		if($this->_loggedUser->role_id != Model_Utilisateur::_ROLE_SUPER_ADMIN){
+			$this->_helper->redirector("index");
+			exit;
+		}
 	}
 	
 	

@@ -39,7 +39,7 @@ class Model_ThemeMapper
         }
     }
  
-    public function find($id, Application_Model_Theme $theme)
+    public function find($id, Model_Theme $theme)
     {
         $result = $this->getDbTable()->find($id);
         if (0 == count($result)) {
@@ -50,8 +50,25 @@ class Model_ThemeMapper
                   ->setTheme($row->theme) 
 		          ->setActive($row->active)
                   ->setDateCreation($row->date_creation);
+		return $theme;
     }
  
+	// public function findById($id){
+	// 	if(is_int($id)){
+	// 		
+	// 		$res_array = array();
+	// 		$select = Zend_Db_Table::getDefaultAdapter()->select();
+	// 		$select->from('theme');
+	// 		$select->where("theme_id = ?" ,$id); 
+	// 		$res = $select->query();  
+	// 		foreach ($res as $val => $theme){ 
+	// 			$res_array [$val] = $theme;
+	// 		}
+	// 		return $res_array;	
+	// 	}
+	// 	return false;
+	// }
+	
     public function fetchAll()
     {
         $resultSet = $this->getDbTable()->fetchAll();
