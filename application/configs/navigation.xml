@@ -9,7 +9,7 @@
 			<uri></uri>
 		</accueil>
 		<contact>
-			<label>Contact</label>
+			<label>Contactez moi</label>
 			<module>default</module>
 			<controller>contact</controller>
 			<action>index</action>
@@ -19,7 +19,7 @@
 			<module>default</module>
 			<controller>rss</controller>
 			<action>index</action>
-		</rss>	
+		</rss> 
 	</base>
 	<loggedout>
 		<signup>
@@ -115,4 +115,24 @@
 			<action>index</action>
 		</commandes>
 	</admin>
+	<footer>
+		<sitemap>
+			<label>Sitemap</label>
+			<module>default</module>
+			<controller>sitemap</controller>
+			<action>index</action>
+		</sitemap>
+		<terms>
+			<label>Conditions générales</label>
+			<module>default</module>
+			<controller>conditions</controller>
+			<action>index</action>
+		</terms>
+		<contact>
+			<label>Contact</label>
+			<module>default</module>
+			<controller>contact</controller>
+			<action>index</action>
+		</contact>
+	</footer>
 </configdata>

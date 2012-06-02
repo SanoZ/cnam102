@@ -15,6 +15,7 @@ class ContactController extends ApplicationController
         if ($this->_request->isPost()) {
             $formData = $this->_request->getPost();
             if ($form->isValid($formData)) {
+				//TODO send email using Zend mail + smtp
                 return $this->_helper->redirector('merci'); 
             } else {
                 $form->populate($formData);

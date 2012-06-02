@@ -105,6 +105,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 		
  		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'admin');
 		$view->admin = new Zend_Navigation($pages);
+		
+ 		$pages = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml', 'footer');
+		$view->footer = new Zend_Navigation($pages);
 		 
 	}
  
